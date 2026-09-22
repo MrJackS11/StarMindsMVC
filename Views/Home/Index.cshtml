@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "Gabinete Psicológico Universitario";
+}
+
+<div class="container py-4">
+    <!-- Hero Section -->
+    <div class="row align-items-center mb-5 py-4 px-3 rounded-4 shadow-sm bg-white" style="border-left: 6px solid #2A6F97;">
+        <div class="col-lg-7">
+            <span class="badge mb-2 px-3 py-2 text-white rounded-pill" style="background-color: #528788; font-size: 0.85rem;">
+                Espacio 100% Confidencial y Gratuito
+            </span>
+            <h1 class="display-5 fw-bold mb-3" style="color: #2A6F97;">
+                Tu bienestar emocional importa tanto como tu rendimiento académico.
+            </h1>
+            <p class="lead text-secondary mb-4" style="font-size: 1.1rem; line-height: 1.6;">
+                En <strong>Star Minds</strong> te brindamos contención y acompañamiento psicológico sin riesgos de exposición. Regístrate con un alias o código anónimo y agenda sesiones con nuestros especialistas sin temor al juicio social.
+            </p>
+            <div class="d-flex flex-wrap gap-3">
+                <a asp-controller="Account" asp-action="Register" class="btn btn-lg text-white shadow-sm" style="background-color: #528788; border-radius: 10px; font-weight: 500;">
+                    Comenzar con un Alias Anónimo
+                </a>
+                <a asp-controller="Account" asp-action="Login" class="btn btn-lg shadow-sm" style="border: 2px solid #2A6F97; color: #2A6F97; border-radius: 10px; font-weight: 500;">
+                    Acceder a mi Portal
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-5 text-center mt-4 mt-lg-0">
+            <div class="p-4 rounded-4" style="background-color: #F8F9FA; border: 1px dashed #cbd5e1;">
+                <div style="font-size: 3.5rem; color: #2A6F97;">✦</div>
+                <h5 class="fw-bold mt-2" style="color: #2A6F97;">Protocolo Discreto Star Minds</h5>
+                <p class="small text-muted mb-0">
+                    Los terapeutas solo conocerán tu identificador anónimo. No revelamos tu identidad ni almacenamos registros que expongan tu privacidad en pantalla.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pilares del servicio -->
+    <div class="row g-4 text-center">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm p-4 rounded-4 bg-white">
+                <div class="rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; background-color: #e8f1f5; color: #2A6F97; font-size: 1.5rem;">
+                    🛡️
+                </div>
+                <h5 class="fw-bold" style="color: #2A6F97;">Anonimato Garantizado</h5>
+                <p class="text-muted small">
+                    Elige un alias con el que te sientas seguro. Tu nombre real queda aislado bajo estrictas políticas de privacidad institucional.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm p-4 rounded-4 bg-white">
+                <div class="rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; background-color: #e6f2f2; color: #528788; font-size: 1.5rem;">
+                    ⏱️
+                </div>
+                <h5 class="fw-bold" style="color: #528788;">Sesiones Estructuradas</h5>
+                <p class="text-muted small">
+                    Consultas de 45 a 50 minutos con pausas obligatorias intermedias para evitar solapamientos y respetar los tiempos de atención.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm p-4 rounded-4 bg-white">
+                <div class="rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; background-color: #f1f5f9; color: #212529; font-size: 1.5rem;">
+                    📖
+                </div>
+                <h5 class="fw-bold" style="color: #212529;">Recursos Abiertos</h5>
+                <p class="text-muted small">
+                    Accede libremente a artículos psicoeducativos y ejercicios de autocuidado emocional sin necesidad de registro obligatorio.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

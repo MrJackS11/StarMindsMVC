@@ -1,0 +1,71 @@
+@model StarMindsMVC.Models.RegistroViewModel
+
+@{
+    ViewData["Title"] = "Registro Confidencial";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-0 rounded-4" style="border-top: 6px solid #2A6F97 !important;">
+                <div class="card-body p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <h3 class="fw-bold" style="color: #2A6F97;">Star Minds</h3>
+                        <p class="text-muted small">Registro confidencial para estudiantes</p>
+                    </div>
+
+                    <form asp-action="Register" method="post">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Alias" class="form-label fw-semibold text-secondary">Alias o Código Anónimo *</label>
+                            <input asp-for="Alias" class="form-control py-2" placeholder="Ej: EstrellaAzul" />
+                            <small class="text-muted d-block mt-1">Este identificador es el único visible para los psicólogos.</small>
+                            <span asp-validation-for="Alias" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Correo" class="form-label fw-semibold text-secondary">Correo Institucional *</label>
+                            <input asp-for="Correo" class="form-control py-2" placeholder="usuario@upds.edu.bo" />
+                            <span asp-validation-for="Correo" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label fw-semibold text-secondary">Contraseña *</label>
+                            <input asp-for="Password" type="password" class="form-control py-2" placeholder="••••••••" />
+                            <span asp-validation-for="Password" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="NombreReal" class="form-label fw-semibold text-secondary">Nombre Completo (Opcional)</label>
+                            <input asp-for="NombreReal" class="form-control py-2" placeholder="Tu nombre real (privado)" />
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="CodigoInstitucional" class="form-label fw-semibold text-secondary">Código Estudiantil (Opcional)</label>
+                            <input asp-for="CodigoInstitucional" class="form-control py-2" placeholder="Ej: SIS-102938" />
+                        </div>
+
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn text-white py-2 fw-semibold shadow-sm" style="background-color: #528788; border-radius: 8px;">
+                                Crear Cuenta Confidencial
+                            </button>
+                        </div>
+
+                        <div class="text-center mt-3 pt-2 border-top">
+                            <span class="text-muted small">¿Ya tienes cuenta?</span>
+                            <a asp-action="Login" class="fw-semibold text-decoration-none ms-1" style="color: #2A6F97;">
+                                Inicia Sesión
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
