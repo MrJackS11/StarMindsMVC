@@ -46,3 +46,4 @@
 /home/leo/StarMindsMVC/obj/Debug/net8.0/StarMindsMVC.pdb
 /home/leo/StarMindsMVC/obj/Debug/net8.0/StarMindsMVC.genruntimeconfig.cache
 /home/leo/StarMindsMVC/obj/Debug/net8.0/ref/StarMindsMVC.dll
+/home/leo/StarMindsMVC/obj/Debug/net8.0/StarMindsMVC.sourcelink.json

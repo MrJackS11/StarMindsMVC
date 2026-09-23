@@ -1,0 +1,134 @@
+@model StarMindsMVC.Models.AgendarCitaViewModel
+
+@{
+    ViewData["Title"] = "Agendar Cita Confidencial";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm" style="border-radius: 16px;">
+                <div class="card-header bg-white border-0 pt-4 px-4 pb-0">
+                    <span class="badge px-3 py-2 text-white mb-2" style="background-color: #2D6A4F; font-size: 0.8rem; border-radius: 20px;">
+                        Protocolo Discreto Star Minds
+                    </span>
+                    <h3 class="fw-bold text-dark mb-1">Agendar Sesión de Apoyo</h3>
+                    <p class="text-muted small">Tu reserva se vinculará únicamente a tu alias anónimo. Los terapeutas no tienen acceso a tu identidad académica.</p>
+                </div>
+
+                <div class="card-body px-4 py-3">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                    <form asp-action="Agendar" method="get" id="filtroForm" class="mb-4">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold text-secondary">Especialista</label>
+                                <select name="psicologoId" class="form-select" onchange="document.getElementById('filtroForm').submit();">
+                                    @if (Model.PsicologosDisponibles != null)
+                                    {
+                                        foreach (var p in Model.PsicologosDisponibles)
+                                        {
+                                            <option value="@p.Id" selected="@(p.Id == Model.PsicologoId ? "selected" : null)">
+                                                @p.NombreCompleto - @p.Especialidad
+                                            </option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold text-secondary">Fecha de Consulta</label>
+                                <input type="date" name="fecha" class="form-control" 
+                                       value="@Model.Fecha.ToString("yyyy-MM-dd")" 
+                                       min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")"
+                                       onchange="document.getElementById('filtroForm').submit();" />
+                            </div>
+                        </div>
+                    </form>
+
+                    <form asp-action="Agendar" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="PsicologoId" />
+                        <input type="hidden" asp-for="Fecha" value="@Model.Fecha.ToString("yyyy-MM-dd")" />
+
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold text-secondary d-flex justify-content-between">
+                                <span>Horarios Disponibles (45 min sesión + 15 min pausa)</span>
+                                <span class="badge" style="background-color: #52B788; color: white;">Verde: Turno Libre</span>
+                            </label>
+
+                            @if (Model.HorariosDisponibles.Any())
+                            {
+                                <div class="d-flex flex-wrap gap-2 mt-2">
+                                    @foreach (var hora in Model.HorariosDisponibles)
+                                    {
+                                        var horaStr = hora.ToString(@"hh\:mm");
+                                        var radioId = $"hora_{hora.Hours}_{hora.Minutes}";
+
+                                        <input type="radio" class="btn-check" name="HoraInicio" id="@radioId" value="@hora" required />
+                                        <label class="btn px-3 py-2 text-white fw-bold shadow-sm" 
+                                               for="@radioId" 
+                                               style="background-color: #52B788; border: none; border-radius: 8px;">
+                                            @horaStr
+                                        </label>
+                                    }
+                                </div>
+                                <span asp-validation-for="HoraInicio" class="text-danger small mt-1 d-block"></span>
+                            }
+                            else
+                            {
+                                <div class="alert alert-light border text-center py-3 text-muted">
+                                    No hay turnos libres para la fecha seleccionada. Por favor prueba seleccionando otro día o terapeuta.
+                                </div>
+                            }
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold text-secondary">Modalidad de la Sesión</label>
+                            <div class="d-flex gap-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" asp-for="Modalidad" value="Presencial" id="modPresencial" checked>
+                                    <label class="form-check-label" for="modPresencial">Presencial (Gabinete UPDS)</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" asp-for="Modalidad" value="Virtual" id="modVirtual">
+                                    <label class="form-check-label" for="modVirtual">Virtual (Enlace privado)</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="MotivoConsulta" class="form-label fw-semibold text-secondary">
+                                Motivo orientativo o cómo te sientes hoy (Opcional)
+                            </label>
+                            <textarea asp-for="MotivoConsulta" class="form-control" rows="3" 
+                                      placeholder="Ej. Siento sobrecarga por exámenes finales o dificultad para concentrarme..." 
+                                      style="resize: none; border-radius: 8px;"></textarea>
+                            <span asp-validation-for="MotivoConsulta" class="text-danger small"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                            <a asp-action="Index" class="btn btn-outline-secondary px-4 py-2" style="border-radius: 8px;">
+                                Volver a Mis Citas
+                            </a>
+                            <button type="submit" class="btn text-white px-4 py-2 fw-semibold" 
+                                    style="background-color: #2D6A4F; border-radius: 8px;"
+                                    @(Model.HorariosDisponibles.Any() ? "" : "disabled")>
+                                Confirmar Agendamiento
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Estilo para que el botón de horario seleccionado resalte */
+    .btn-check:checked + label {
+        background-color: #1b4332 !important;
+        box-shadow: 0 0 0 0.25rem rgba(45, 106, 79, 0.4) !important;
+        transform: scale(1.05);
+    }
+</style>
