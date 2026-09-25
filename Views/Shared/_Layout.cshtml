@@ -12,7 +12,7 @@
     <style>
         :root {
             --azul-serenidad: #2A6F97;
-            --verde-menta: #528788;
+            --verde-menta: #52B788;
             --gris-claro: #F8F9FA;
             --gris-carbon: #212529;
             --rojo-alerta: #E63946;
@@ -41,7 +41,7 @@
             padding: 8px 18px;
         }
         .btn-menta:hover {
-            background-color: #416f70;
+            background-color: #40916c;
             color: white;
         }
         .btn-outline-serenidad {
@@ -75,7 +75,9 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Home" asp-action="Privacy">Privacidad y Anonimato</a>
                         </li>
-                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+
+                        @* Vistas exclusivas de Estudiantes *@
+                        @if (User.IsInRole("Estudiante"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link fw-semibold" asp-controller="Citas" asp-action="Index" style="color: var(--verde-menta) !important;">
@@ -83,9 +85,19 @@
                                 </a>
                             </li>
                         }
+
+                        @* Vistas exclusivas del Especialista / Terapeuta (Sprint 3) *@
+                        @if (User.IsInRole("Psicologo"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link fw-semibold text-primary" asp-controller="Psicologo" asp-action="Agenda">
+                                    📋 Agenda Terapéutica
+                                </a>
+                            </li>
+                        }
                     </ul>
                     
-                    @* Bloque de autenticación dinámico (Sprint 2 - HU01 / CP04) *@
+                    @* Control de sesión *@
                     @if (User.Identity != null && User.Identity.IsAuthenticated)
                     {
                         <div class="d-flex align-items-center gap-3">

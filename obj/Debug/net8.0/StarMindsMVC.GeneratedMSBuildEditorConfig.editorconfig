@@ -42,6 +42,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/home/leo/StarMindsMVC/Views/Psicologo/Agenda.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHNpY29sb2dvL0FnZW5kYS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/leo/StarMindsMVC/Views/Psicologo/RedactarNota.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHNpY29sb2dvL1JlZGFjdGFyTm90YS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/leo/StarMindsMVC/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

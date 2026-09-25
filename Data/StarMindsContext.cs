@@ -12,6 +12,7 @@ public class StarMindsContext : DbContext
     public DbSet<Estudiante> Estudiantes { get; set; }
     public DbSet<Psicologo> Psicologos { get; set; }
     public DbSet<Cita> Citas { get; set; }
+    public DbSet<NotaClinica> NotasClinicas => Set<NotaClinica>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
