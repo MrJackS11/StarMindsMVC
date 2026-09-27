@@ -9,60 +9,106 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    
     <style>
         :root {
             --azul-serenidad: #2A6F97;
-            --verde-menta: #52B788;
+            --verde-menta: #528788;
+            --morado-calma: #6D597A;
+            --morado-acento: #7B2CBF;
             --gris-claro: #F8F9FA;
             --gris-carbon: #212529;
             --rojo-alerta: #E63946;
         }
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--gris-claro);
             color: var(--gris-carbon);
+            overflow-x: hidden;
+            position: relative;
         }
+
+        /* Efecto Glow que sigue al Mouse */
+        #cursor-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 380px;
+            height: 380px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(109, 89, 122, 0.12) 0%, rgba(42, 111, 151, 0.06) 45%, rgba(0,0,0,0) 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+
         .navbar-starminds {
-            background-color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             border-bottom: 2px solid #e9ecef;
         }
+
         .nav-link {
             font-weight: 500;
             color: #495057 !important;
+            transition: all 0.2s ease;
         }
+
         .nav-link:hover {
-            color: var(--azul-serenidad) !important;
+            color: var(--morado-calma) !important;
+            transform: translateY(-1px);
         }
-        .btn-menta {
-            background-color: var(--verde-menta);
-            color: white;
-            font-weight: 500;
-            border-radius: 8px;
-            padding: 8px 18px;
+
+        .badge-morado {
+            background-color: #F1EDF5;
+            color: var(--morado-calma);
+            border: 1px solid #D8CFE3;
         }
-        .btn-menta:hover {
-            background-color: #40916c;
-            color: white;
+
+        /* Reproductor Flotante de Audio */
+        .music-widget {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: rgba(30, 35, 42, 0.92);
+            backdrop-filter: blur(12px);
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 35px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.12);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        .btn-outline-serenidad {
-            border: 2px solid var(--azul-serenidad);
-            color: var(--azul-serenidad);
-            font-weight: 500;
-            border-radius: 8px;
-            padding: 7px 16px;
+
+        .music-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 4px;
+            transition: transform 0.2s ease, color 0.2s ease;
         }
-        .btn-outline-serenidad:hover {
-            background-color: var(--azul-serenidad);
-            color: white;
+        .music-btn:hover {
+            color: #C7F9CC;
+            transform: scale(1.15);
         }
     </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
+    <!-- Luz estelar seguidora de cursor -->
+    <div id="cursor-glow"></div>
+
     <header>
-        <nav class="navbar navbar-expand-lg navbar-starminds py-3 shadow-sm">
+        <nav class="navbar navbar-expand-lg navbar-starminds py-3 shadow-sm sticky-top">
             <div class="container">
                 <a class="navbar-brand fw-bold d-flex align-items-center gap-2" asp-area="" asp-controller="Home" asp-action="Index" style="color: var(--azul-serenidad); font-size: 1.3rem;">
-                    <span>✦ Star Minds</span>
+                    <span style="color: var(--morado-acento);">✦</span> <span>Star Minds</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContenido">
                     <span class="navbar-toggler-icon"></span>
@@ -75,33 +121,31 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Home" asp-action="Privacy">Privacidad y Anonimato</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold" asp-controller="Home" asp-action="ParaTi" style="color: var(--morado-calma) !important;">
+                                ✦ Para Ti (Muro)
+                            </a>
+                        </li>
 
-                        @* Vistas exclusivas de Estudiantes *@
                         @if (User.IsInRole("Estudiante"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link fw-semibold" asp-controller="Citas" asp-action="Index" style="color: var(--verde-menta) !important;">
-                                    Mis Citas
-                                </a>
+                                <a class="nav-link fw-semibold" style="color: var(--verde-menta) !important;" asp-controller="Citas" asp-action="Index">Mis Citas</a>
                             </li>
                         }
 
-                        @* Vistas exclusivas del Especialista / Terapeuta (Sprint 3) *@
                         @if (User.IsInRole("Psicologo"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link fw-semibold text-primary" asp-controller="Psicologo" asp-action="Agenda">
-                                    📋 Agenda Terapéutica
-                                </a>
+                                <a class="nav-link fw-semibold text-primary" asp-controller="Psicologo" asp-action="Agenda">📋 Agenda Terapéutica</a>
                             </li>
                         }
                     </ul>
                     
-                    @* Control de sesión *@
                     @if (User.Identity != null && User.Identity.IsAuthenticated)
                     {
                         <div class="d-flex align-items-center gap-3">
-                            <span class="fw-semibold px-3 py-1 rounded-pill border" style="background-color: #e8f1f5; color: var(--azul-serenidad); font-size: 0.9rem;">
+                            <span class="fw-semibold px-3 py-1 rounded-pill badge-morado" style="font-size: 0.9rem;">
                                 ✦ @User.Identity.Name
                             </span>
                             <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline m-0">
@@ -115,8 +159,8 @@
                     else
                     {
                         <div class="d-flex align-items-center gap-2">
-                            <a class="btn btn-outline-serenidad" asp-controller="Account" asp-action="Login">Iniciar Sesión</a>
-                            <a class="btn btn-menta shadow-sm" asp-controller="Account" asp-action="Register">Registro Anónimo</a>
+                            <a class="btn btn-outline-secondary rounded-3 px-3" asp-controller="Account" asp-action="Login">Iniciar Sesión</a>
+                            <a class="btn text-white rounded-3 px-3 shadow-sm" style="background-color: var(--morado-calma);" asp-controller="Account" asp-action="Register">Registro Anónimo</a>
                         </div>
                     }
                 </div>
@@ -130,6 +174,22 @@
         </main>
     </div>
 
+    <!-- REPRODUCTOR DE MÚSICA AMBIENTAL (Tom Odell / Cigarettes After Sex) -->
+    <div class="music-widget">
+        <span style="font-size: 1.1rem;">🎧</span>
+        <div style="line-height: 1.1;">
+            <div class="small fw-semibold" id="track-name" style="font-size: 0.78rem; max-width: 170px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                Música Ambiental
+            </div>
+            <small class="text-white-50" style="font-size: 0.68rem;">Star Minds Lo-Fi</small>
+        </div>
+        <button class="music-btn" onclick="togglePlayMusic()" id="btn-play-pause" title="Reproducir/Pausar">▶</button>
+        <button class="music-btn" onclick="nextTrack()" title="Cambiar Canción">⏭</button>
+    </div>
+
+    <!-- Iframe oculto de YouTube para emitir el audio -->
+    <div id="youtube-player" style="display: none;"></div>
+
     <footer class="bg-white border-top py-3 text-center text-muted small mt-auto">
         <div class="container">
             &copy; 2026 - Star Minds | Gabinete de Apoyo Psicológico Universitario - UPDS Cochabamba
@@ -139,6 +199,75 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- Script del Seguidor de Cursor y Audio de Fondo -->
+    <script>
+        // 1. Seguimiento del cursor
+        const glow = document.getElementById('cursor-glow');
+        window.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+
+        // 2. Control de Música con YouTube IFrame API
+        const tracks = [
+            { id: 'J3OPP2vNRjw', title: 'Black Friday (Piano)' },
+            { id: 'SU4GAPmlP2E', title: "Nothing's Gonna Hurt You Baby" }
+        ];
+        let currentTrackIndex = 0;
+        let player = null;
+        let isPlaying = false;
+
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0',
+                width: '0',
+                videoId: tracks[currentTrackIndex].id,
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'loop': 1,
+                    'playlist': tracks[currentTrackIndex].id
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady() {
+            document.getElementById('track-name').innerText = tracks[currentTrackIndex].title;
+        }
+
+        function togglePlayMusic() {
+            if (!player || typeof player.playVideo !== 'function') return;
+            const btn = document.getElementById('btn-play-pause');
+            if (isPlaying) {
+                player.pauseVideo();
+                btn.innerText = '▶';
+                isPlaying = false;
+            } else {
+                player.playVideo();
+                btn.innerText = '⏸';
+                isPlaying = true;
+            }
+        }
+
+        function nextTrack() {
+            if (!player || typeof player.loadVideoById !== 'function') return;
+            currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+            player.loadVideoById(tracks[currentTrackIndex].id);
+            document.getElementById('track-name').innerText = tracks[currentTrackIndex].title;
+            document.getElementById('btn-play-pause').innerText = '⏸';
+            isPlaying = true;
+        }
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

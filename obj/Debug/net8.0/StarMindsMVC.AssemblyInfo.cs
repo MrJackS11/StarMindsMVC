@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StarMindsMVC")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+38399b6c508c34aea6850560b2f0b1e4865bed56")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8cab66b84e91bd3a4edd5a8bab0a289b823f397b")]
 [assembly: System.Reflection.AssemblyProductAttribute("StarMindsMVC")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StarMindsMVC")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

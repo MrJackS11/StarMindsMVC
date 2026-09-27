@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/leo/StarMindsMVC/StarMindsMVC.csproj": {}
+    "C:\\Users\\cardo\\StarMindsMVC\\StarMindsMVC.csproj": {}
   },
   "projects": {
-    "/home/leo/StarMindsMVC/StarMindsMVC.csproj": {
+    "C:\\Users\\cardo\\StarMindsMVC\\StarMindsMVC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/leo/StarMindsMVC/StarMindsMVC.csproj",
+        "projectUniqueName": "C:\\Users\\cardo\\StarMindsMVC\\StarMindsMVC.csproj",
         "projectName": "StarMindsMVC",
-        "projectPath": "/home/leo/StarMindsMVC/StarMindsMVC.csproj",
-        "packagesPath": "/home/leo/.nuget/packages/",
-        "outputPath": "/home/leo/StarMindsMVC/obj/",
+        "projectPath": "C:\\Users\\cardo\\StarMindsMVC\\StarMindsMVC.csproj",
+        "packagesPath": "C:\\Users\\cardo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\cardo\\StarMindsMVC\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/leo/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\cardo\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -24,6 +24,7 @@
         },
         "frameworks": {
           "net8.0": {
+            "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {}
           }
@@ -32,10 +33,17 @@
           "warnAsError": [
             "NU1605"
           ]
-        }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.400"
       },
       "frameworks": {
         "net8.0": {
+          "framework": "net8.0",
           "targetAlias": "net8.0",
           "dependencies": {
             "BCrypt.Net-Next": {
@@ -58,6 +66,24 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.31, 8.0.31]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[8.0.31, 8.0.31]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.31, 8.0.31]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[8.0.31, 8.0.31]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -66,7 +92,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.130/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
