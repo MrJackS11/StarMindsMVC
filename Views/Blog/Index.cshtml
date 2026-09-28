@@ -12,33 +12,46 @@
     };
 }
 
-<!-- ESTILOS DE SWIPER UI -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
-<!-- CABECERA PRINCIPAL CON ESTILO TERAPÉUTICO -->
+<!-- CABECERA PRINCIPAL CON ESTILO TERAPÉUTICO Y ESTRELLAS FLOTANTES -->
 <section class="w-100 py-5 px-3 px-lg-5 text-white mb-4 position-relative overflow-hidden" 
          style="background: radial-gradient(circle at 75% 25%, #2A6F97 0%, #152238 65%, #0B1320 100%); border-bottom: 1px solid rgba(255,255,255,0.08);">
+    
+    <!-- Destellos Estelares Flotantes con animación continua (idéntico a Home y Para Ti) -->
+    <div class="star-sparkle" style="position: absolute; top: 16%; right: 28%; font-size: 2.2rem; color: #FFF385; opacity: 0.85;">✦</div>
+    <div class="star-sparkle" style="position: absolute; top: 38%; right: 12%; font-size: 1.5rem; color: #C7F9CC; opacity: 0.75;">✦</div>
+    <div class="star-sparkle" style="position: absolute; bottom: 20%; right: 35%; font-size: 1.8rem; color: #E8D7F1; opacity: 0.8;">✦</div>
+    <div class="star-sparkle" style="position: absolute; top: 25%; left: 10%; font-size: 1.4rem; color: #FFF385; opacity: 0.7;">✦</div>
+    <div class="star-sparkle" style="position: absolute; bottom: 25%; left: 22%; font-size: 1.6rem; color: #C7F9CC; opacity: 0.65;">✦</div>
+
     <div class="container-fluid px-lg-5 text-center position-relative" style="z-index: 2;">
-        <span class="badge mb-3 px-3 py-2 text-white rounded-pill fw-semibold shadow-sm" style="background-color: var(--verde-menta); font-size: 0.85rem;">
+        <span class="badge mb-3 px-3 py-2 text-white rounded-pill fw-semibold shadow-sm" 
+              style="background-color: var(--verde-menta); font-size: 0.85rem;"
+              data-aos="fade-down" data-aos-duration="600">
             ✦ Espacio Psicoeducativo Libre • UPDS
         </span>
-        <h1 class="display-5 fw-bold mb-3 text-white">Guías y Herramientas de Bienestar</h1>
-        <p class="text-white-50 mx-auto fs-5 mb-4" style="max-width: 680px;">
+        <h1 class="display-5 fw-bold mb-3 text-white" 
+            style="font-size: clamp(2rem, 4.5vw, 3rem); line-height: 1.2;"
+            data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">
+            Guías y Herramientas de Bienestar
+        </h1>
+        <p class="text-white-50 mx-auto fs-5 mb-4" 
+           style="max-width: 680px; line-height: 1.6;"
+           data-aos="fade-up" data-aos-duration="700" data-aos-delay="150">
             Lecturas clínicas accesibles, anónimas y gratuitas para fortalecer tu salud emocional y rendimiento universitario.
         </p>
 
-        <!-- BUSCADOR EN VIVO DE ARTÍCULOS -->
-        <div class="mx-auto" style="max-width: 520px;">
-            <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden bg-white p-1">
+        <!-- BUSCADOR EN VIVO DE ARTÍCULOS CON GLASSMORPHISM Y GLOW -->
+        <div class="mx-auto" style="max-width: 540px;" data-aos="zoom-in" data-aos-duration="750" data-aos-delay="200">
+            <div class="input-group input-group-lg shadow-lg rounded-pill overflow-hidden p-1 search-glass-container">
                 <span class="input-group-text bg-transparent border-0 ps-3 text-muted">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search text-muted" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-search text-muted" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
                     </svg>
                 </span>
                 <input type="text" id="blog-search-input" class="form-control border-0 shadow-none ps-2" 
                        placeholder="Buscar por tema (ansiedad, sueño, depresión, apego...)" 
-                       style="font-size: 0.95rem;">
-                <button class="btn text-white rounded-pill px-4 fw-semibold" style="background-color: var(--azul-serenidad);" type="button">
+                       style="font-size: 0.95rem; background: transparent;">
+                <button class="btn text-white rounded-pill px-4 fw-semibold shadow-sm" style="background-color: var(--azul-serenidad);" type="button">
                     Buscar
                 </button>
             </div>
@@ -51,7 +64,7 @@
     <!-- SECCIÓN SWIPER UI: CARRUSEL DE GUÍAS DESTACADAS -->
     @if (Model.Any())
     {
-        <div class="mb-5 position-relative">
+        <div class="mb-5 position-relative" data-aos="fade-up" data-aos-duration="750">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <div>
                     <span class="badge rounded-pill px-3 py-1.5 fw-semibold shadow-sm" style="background-color: #F1EDF5; color: var(--morado-calma);">
@@ -59,12 +72,12 @@
                     </span>
                     <h3 class="fw-bold mt-1 mb-0" style="color: var(--azul-serenidad);">Guías Destacadas de la Semana</h3>
                 </div>
-                <!-- Controles Swiper -->
+                <!-- Controles Swiper estilizados con hover suave -->
                 <div class="d-flex gap-2">
-                    <button class="btn btn-sm btn-outline-secondary rounded-circle swiper-btn-prev d-flex align-items-center justify-content-center shadow-sm" style="width: 40px; height: 40px; font-size: 1.2rem;">
+                    <button class="btn swiper-btn-custom swiper-btn-prev shadow-sm" aria-label="Anterior">
                         ‹
                     </button>
-                    <button class="btn btn-sm btn-outline-secondary rounded-circle swiper-btn-next d-flex align-items-center justify-content-center shadow-sm" style="width: 40px; height: 40px; font-size: 1.2rem;">
+                    <button class="btn swiper-btn-custom swiper-btn-next shadow-sm" aria-label="Siguiente">
                         ›
                     </button>
                 </div>
@@ -84,26 +97,32 @@
                         if (feat.Categoria == "Estrés Académico") { fBadgeBg = "#E2F4EE"; fBadgeColor = "#266B56"; fBorderColor = "#528788"; }
                         else if (feat.Categoria == "Autocuidado") { fBadgeBg = "#F4EBF8"; fBadgeColor = "#5C3370"; fBorderColor = "#7B2CBF"; }
                         else if (feat.Categoria == "Depresión") { fBadgeBg = "#FDE8E8"; fBadgeColor = "#9B1C1C"; fBorderColor = "#E63946"; }
-                        else if (feat.Categoria == "Apego") { fBadgeBg = "#EBF5FB"; fBadgeColor = "#1A5276"; fBorderColor = "#2A6F97"; }
+                        else if (feat.Categoria == "Apego" || feat.Categoria == "Relaciones & Apego") { fBadgeBg = "#EBF5FB"; fBadgeColor = "#1A5276"; fBorderColor = "#2A6F97"; }
 
-                        <div class="swiper-slide">
-                            <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white d-flex flex-column justify-content-between position-relative swiper-card-custom"
-                                 style="border-top: 5px solid @fBorderColor !important; min-height: 250px;">
+                        <div class="swiper-slide h-auto">
+                            <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white d-flex flex-column justify-content-between position-relative swiper-card-custom tilt-card"
+                                 style="border-top: 5px solid @fBorderColor !important; min-height: 270px; transform-style: preserve-3d;">
                                 <div>
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span class="badge px-3 py-1 rounded-pill small fw-semibold" style="background-color: @fBadgeBg; color: @fBadgeColor;">
-                                            ✦ @feat.Categoria
-                                        </span>
-                                        <span class="badge bg-light text-muted border rounded-pill px-2.5 py-1 small">
-                                            Destacado
-                                        </span>
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div class="rounded-circle d-flex align-items-center justify-content-center shadow-sm" 
+                                             style="width: 44px; height: 44px; background: @fBadgeBg; color: @fBadgeColor; font-size: 1.25rem;">
+                                            ✦
+                                        </div>
+                                        <div class="d-flex align-items-center gap-1.5">
+                                            <span class="badge px-3 py-1 rounded-pill small fw-semibold shadow-sm" style="background-color: @fBadgeBg; color: @fBadgeColor;">
+                                                ✦ @feat.Categoria
+                                            </span>
+                                            <span class="badge bg-light text-muted border rounded-pill px-2.5 py-1 small">
+                                                Destacado
+                                            </span>
+                                        </div>
                                     </div>
-                                    <h5 class="fw-bold mb-2 lh-base" style="color: #1F2937;">@feat.Titulo</h5>
+                                    <h5 class="fw-bold mb-2 lh-base text-dark">@feat.Titulo</h5>
                                     <p class="text-muted small mb-3" style="line-height: 1.6;">@featSnippet</p>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-2">
                                     <small class="text-muted" style="font-size: 0.78rem;">@feat.FechaPublicacion.ToString("dd/MM/yyyy")</small>
-                                    <a asp-action="Detalle" asp-route-id="@feat.Id" class="btn btn-sm fw-semibold text-white px-3 py-1.5 rounded-pill shadow-sm" style="background-color: var(--verde-menta);">
+                                    <a asp-action="Detalle" asp-route-id="@feat.Id" class="btn btn-sm fw-semibold text-white px-3 py-1.5 rounded-pill shadow-sm btn-read-guide" style="background-color: var(--verde-menta);">
                                         Leer guía →
                                     </a>
                                 </div>
@@ -117,24 +136,24 @@
         </div>
     }
 
-    <!-- FILTRO DE CATEGORÍAS ELEGANTE -->
-    <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
-        <a asp-action="Index" class="btn btn-sm rounded-pill px-3 py-2 fw-medium @(string.IsNullOrEmpty(ViewBag.CategoriaSeleccionada) ? "btn-primary shadow-sm" : "btn-light border text-muted")">
+    <!-- FILTRO DE CATEGORÍAS ELEGANTE CON PÍLDORAS FLOTANTES -->
+    <div class="d-flex flex-wrap justify-content-center gap-2 mb-5" data-aos="fade-up" data-aos-delay="100">
+        <a asp-action="Index" class="btn filter-pill @(string.IsNullOrEmpty(ViewBag.CategoriaSeleccionada) ? "filter-pill-active" : "filter-pill-inactive")">
             ✦ Todas las Guías
         </a>
-        <a asp-action="Index" asp-route-categoria="Ansiedad" class="btn btn-sm rounded-pill px-3 py-2 fw-medium @(ViewBag.CategoriaSeleccionada == "Ansiedad" ? "btn-primary shadow-sm" : "btn-light border text-muted")">
+        <a asp-action="Index" asp-route-categoria="Ansiedad" class="btn filter-pill @(ViewBag.CategoriaSeleccionada == "Ansiedad" ? "filter-pill-active" : "filter-pill-inactive")">
             Ansiedad
         </a>
-        <a asp-action="Index" asp-route-categoria="Estrés Académico" class="btn btn-sm rounded-pill px-3 py-2 fw-medium @(ViewBag.CategoriaSeleccionada == "Estrés Académico" ? "btn-primary shadow-sm" : "btn-light border text-muted")">
+        <a asp-action="Index" asp-route-categoria="Estrés Académico" class="btn filter-pill @(ViewBag.CategoriaSeleccionada == "Estrés Académico" ? "filter-pill-active" : "filter-pill-inactive")">
             Estrés Académico
         </a>
-        <a asp-action="Index" asp-route-categoria="Autocuidado" class="btn btn-sm rounded-pill px-3 py-2 fw-medium @(ViewBag.CategoriaSeleccionada == "Autocuidado" ? "btn-primary shadow-sm" : "btn-light border text-muted")">
+        <a asp-action="Index" asp-route-categoria="Autocuidado" class="btn filter-pill @(ViewBag.CategoriaSeleccionada == "Autocuidado" ? "filter-pill-active" : "filter-pill-inactive")">
             Autocuidado
         </a>
-        <a asp-action="Index" asp-route-categoria="Depresión" class="btn btn-sm rounded-pill px-3 py-2 fw-medium @(ViewBag.CategoriaSeleccionada == "Depresión" ? "btn-primary shadow-sm" : "btn-light border text-muted")">
+        <a asp-action="Index" asp-route-categoria="Depresión" class="btn filter-pill @(ViewBag.CategoriaSeleccionada == "Depresión" ? "filter-pill-active" : "filter-pill-inactive")">
             Depresión
         </a>
-        <a asp-action="Index" asp-route-categoria="Apego" class="btn btn-sm rounded-pill px-3 py-2 fw-medium @(ViewBag.CategoriaSeleccionada == "Apego" ? "btn-primary shadow-sm" : "btn-light border text-muted")">
+        <a asp-action="Index" asp-route-categoria="Apego" class="btn filter-pill @(ViewBag.CategoriaSeleccionada == "Apego" ? "filter-pill-active" : "filter-pill-inactive")">
             Apego y Vínculos
         </a>
     </div>
@@ -153,8 +172,10 @@
         }
         else
         {
+            int cardDelay = 50;
             @foreach (var art in Model)
             {
+                cardDelay = (cardDelay % 350) + 60;
                 var plainContent = cleanText(art.Contenido);
                 var previewSnippet = plainContent.Length > 125 ? plainContent.Substring(0, 125) + "..." : plainContent;
                 var wordCount = plainContent.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Length;
@@ -200,8 +221,9 @@
                      data-title="@art.Titulo.ToLower()" 
                      data-content="@plainContent.ToLower()" 
                      data-cat="@art.Categoria.ToLower()"
-                     data-aos="fade-up">
-                    <div class="card h-100 border-0 shadow-sm rounded-4 bg-white overflow-hidden d-flex flex-column justify-content-between blog-hover-card tilt-card">
+                     data-aos="fade-up"
+                     data-aos-delay="@cardDelay">
+                    <div class="card h-100 border-0 shadow-sm rounded-4 bg-white overflow-hidden d-flex flex-column justify-content-between blog-hover-card tilt-card" style="transform-style: preserve-3d;">
                         <!-- LÍNEA SUPERIOR DE GRADIENTE TEMÁTICO -->
                         <div style="height: 6px; background: @gradientTop;"></div>
 
@@ -457,51 +479,134 @@
 </div>
 
 <style>
+    /* ANIMACIÓN ESTELAR IDÉNTICA A HOME Y PARA TI */
+    .star-sparkle {
+        animation: pulseSparkle 3.5s infinite ease-in-out, floatDrift 6s infinite ease-in-out;
+        pointer-events: none;
+    }
+    keyframes pulseSparkle {
+        0%, 100% { transform: scale(1); opacity: 0.55; }
+        50% { transform: scale(1.35); opacity: 0.95; }
+    }
+    keyframes floatDrift {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-7px); }
+    }
+
+    /* BUSCADOR ESTILO GLASSMORPHISM */
+    .search-glass-container {
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(12px);
+        border: 1.5px solid rgba(255, 255, 255, 0.4);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .search-glass-container:focus-within, .search-glass-container:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.16) !important;
+        background: #ffffff;
+    }
+
+    /* CONTROLES SWIPER MODERNOS */
+    .swiper-btn-custom {
+        width: 42px;
+        height: 42px;
+        background: #ffffff;
+        border: 1.5px solid #E2E8F0;
+        color: var(--azul-serenidad);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        font-weight: bold;
+        transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .swiper-btn-custom:hover {
+        background: var(--azul-serenidad);
+        color: #ffffff;
+        border-color: var(--azul-serenidad);
+        transform: scale(1.08);
+        box-shadow: 0 6px 16px rgba(42, 111, 151, 0.25);
+    }
+
+    /* PÍLDORAS DE FILTRO CON TRANSICIÓN SUAVE */
+    .filter-pill {
+        border-radius: 50rem;
+        font-weight: 500;
+        padding: 8px 20px;
+        font-size: 0.92rem;
+        transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .filter-pill-active {
+        background: linear-gradient(135deg, var(--azul-serenidad) 0%, #152238 100%);
+        color: #ffffff !important;
+        box-shadow: 0 6px 14px rgba(42, 111, 151, 0.25);
+        border: none;
+    }
+    .filter-pill-inactive {
+        background: #ffffff;
+        color: #495057;
+        border: 1.5px solid #E2E8F0;
+    }
+    .filter-pill-inactive:hover {
+        transform: translateY(-2px);
+        color: var(--azul-serenidad);
+        border-color: var(--azul-serenidad);
+        box-shadow: 0 6px 14px rgba(42, 111, 151, 0.12);
+        background: #F8FBFD;
+    }
+
+    /* TARJETAS SWIPER Y TARJETAS BLOG */
+    .swiper-card-custom {
+        transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .swiper-card-custom:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 32px rgba(42, 111, 151, 0.14) !important;
+    }
+
     .blog-hover-card {
-        transition: transform 0.22s ease, box-shadow 0.22s ease;
+        transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
     .blog-hover-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 14px 28px rgba(33, 37, 41, 0.09) !important;
+        transform: translateY(-6px);
+        box-shadow: 0 18px 36px rgba(42, 111, 151, 0.12) !important;
     }
+
+    .btn-read-guide {
+        transition: all 0.2s ease;
+    }
+    .btn-read-guide:hover {
+        transform: translateX(4px);
+    }
+
+    .swiper-pagination-bullet-active {
+        background-color: var(--azul-serenidad) !important;
+        width: 24px !important;
+        border-radius: 6px !important;
+    }
+
     .modal-backdrop {
         z-index: 1050 !important;
     }
     .modal {
         z-index: 1055 !important;
     }
-
-    /* ESTILOS SWIPER */
-    .swiper-card-custom {
-        transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-    .swiper-card-custom:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 24px rgba(42, 111, 151, 0.12) !important;
-    }
-    .swiper-pagination-bullet-active {
-        background-color: var(--azul-serenidad) !important;
-        width: 22px !important;
-        border-radius: 6px !important;
-    }
 </style>
 
 @section Scripts {
-    <!-- SCRIPT SWIPER UI -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
     <script>
-        // Mover modales a document.body para evitar que el backdrop los tape
         document.addEventListener('DOMContentLoaded', function () {
+            // Mover modales a document.body para evitar que el backdrop los tape
             document.querySelectorAll('.modal').forEach(function (modal) {
                 document.body.appendChild(modal);
             });
 
             // Inicializar Swiper UI Carousel
-            if (document.querySelector('.mySwiperBlog')) {
+            if (document.querySelector('.mySwiperBlog') && typeof Swiper !== 'undefined') {
                 const swiper = new Swiper('.mySwiperBlog', {
                     slidesPerView: 1,
-                    spaceBetween: 20,
+                    spaceBetween: 22,
                     loop: true,
                     grabCursor: true,
                     autoplay: {
@@ -526,8 +631,30 @@
                             slidesPerView: 3,
                             spaceBetween: 24
                         }
+                    },
+                    on: {
+                        init: function () {
+                            if (typeof AOS !== 'undefined') {
+                                AOS.refresh();
+                            }
+                        }
                     }
                 });
+            }
+
+            // Inicializar o refrescar VanillaTilt en todas las tarjetas
+            if (typeof VanillaTilt !== 'undefined') {
+                VanillaTilt.init(document.querySelectorAll(".tilt-card"), {
+                    max: 8,
+                    speed: 400,
+                    glare: true,
+                    "max-glare": 0.15
+                });
+            }
+
+            // Refrescar AOS
+            if (typeof AOS !== 'undefined') {
+                AOS.refresh();
             }
         });
 
@@ -556,6 +683,10 @@
                 } else {
                     noResults.classList.add('d-none');
                 }
+            }
+
+            if (typeof AOS !== 'undefined') {
+                AOS.refresh();
             }
         }
 
