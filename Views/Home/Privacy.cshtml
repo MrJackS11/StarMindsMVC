@@ -1,148 +1,168 @@
-﻿@{
-    ViewData["Title"] = "Privacidad, Anonimato y Líneas de Apoyo";
+@{
+    ViewData["Title"] = "Privacidad y Anonimato - Star Minds";
 }
 
-<div class="container py-4">
-    <!-- Banner de Alerta / Prevención en Crisis -->
-    <div class="card border-0 text-white mb-4 shadow-sm" style="background: linear-gradient(135deg, #E63946 0%, #ba2d39 100%); border-radius: 14px;">
-        <div class="card-body p-4">
-            <div class="row align-items-center">
-                <div class="col-md-8">
-                    <h3 class="fw-bold mb-2">¿Estás pasando por un momento difícil o una crisis?</h3>
-                    <p class="mb-0 text-white-50">
-                        No estás solo ni sola. Si sientes sobrecarga abrumadora, desesperanza o pensamientos de autolesión, existen canales confidenciales e inmediatos de ayuda gratuita.
-                    </p>
-                </div>
-                <div class="col-md-4 text-md-end mt-3 mt-md-0">
-                    <div class="bg-white text-dark p-3 rounded-3 shadow-sm d-inline-block text-start">
-                        <small class="text-muted fw-bold d-block">LÍNEA DE CONTENCIÓN EMOCIONAL (Bolivia)</small>
-                        <span class="fs-4 fw-bold text-danger">800 11 3040</span>
-                        <div class="small text-secondary mt-1">Gratuito • Confidencial • 24 Horas</div>
-                    </div>
+<!-- CABECERA NOCTURNA ESTRELLADA UNIFICADA -->
+<section class="w-100 py-5 px-3 px-lg-5 text-white mb-4 position-relative overflow-hidden" 
+         style="background: radial-gradient(circle at 80% 30%, #2A6F97 0%, #152238 65%, #0B1320 100%); border-bottom: 1px solid rgba(255,255,255,0.08);">
+    
+    <div style="position: absolute; top: 15%; right: 40%; font-size: 1.8rem; color: #FFF385; opacity: 0.7;">✦</div>
+    <div style="position: absolute; bottom: 20%; right: 25%; font-size: 1.4rem; color: #C7F9CC; opacity: 0.65;">✦</div>
+
+    <div class="container-fluid px-lg-5">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-8" data-aos="fade-right">
+                <span class="badge mb-2 px-3 py-2 text-white rounded-pill shadow-sm" style="background-color: var(--verde-menta); font-size: 0.85rem;">
+                    ✦ Garantía de Confidencialidad Absoluta
+                </span>
+                <h1 class="display-5 fw-bold mb-3 text-white" style="font-size: clamp(1.8rem, 4vw, 2.8rem);">
+                    Tu privacidad es la regla número uno.
+                </h1>
+                <p class="lead text-white-50 mb-0 fs-5" style="max-width: 680px; line-height: 1.7;">
+                    Diseñamos cada módulo para aislar tu identidad institucional. Aquí encuentras protocolos de seguridad y canales de apoyo en situaciones de crisis emocional.
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end" data-aos="zoom-in" data-aos-delay="150">
+                <div class="bg-white text-dark p-4 rounded-4 shadow-lg d-inline-block text-start tilt-card" style="border-left: 6px solid var(--rojo-alerta);">
+                    <small class="text-muted fw-bold d-block mb-1">✦ LÍNEA DE CONTENCIÓN EMOCIONAL (Bolivia)</small>
+                    <a href="tel:800113040" class="fs-3 fw-bold text-danger text-decoration-none d-block">
+                        800 11 3040
+                    </a>
+                    <div class="small text-secondary mt-1">Llamada Gratuita • 100% Confidencial • 24 Horas</div>
                 </div>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- Políticas de Anonimato y Protección de Identidad -->
+<div class="container-fluid px-3 px-lg-5 py-2">
+    <!-- Políticas de Anonimato y Tiempos de Consulta con 3D Tilt y AOS -->
     <div class="row g-4 mb-5">
-        <div class="col-md-6">
-            <div class="card h-100 border-0 shadow-sm p-3" style="border-radius: 14px; background-color: #ffffff;">
-                <div class="card-body">
+        <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="card h-100 border-0 shadow-sm p-4 rounded-4 bg-white tilt-card" style="border-top: 5px solid var(--azul-serenidad) !important;">
+                <div class="card-body p-0">
                     <div class="d-flex align-items-center mb-3">
-                        <div class="rounded-circle p-2 me-3" style="background-color: #E8F4F8; color: #2A6F97;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-shield-lock" viewBox="0 0 16 16">
-                                <path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.288 2.082l.006.003.003.001a.74.74 0 0 0 .762 0l.003-.001.006-.003a10.725 10.725 0 0 0 2.288-2.082c1.527-1.998 2.807-5.03 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067zM8 0c.702 0 1.954.298 3.01.62.97.295 2.148.694 2.85 1.107A1 1 0 0 1 14.5 2.5c.677 5.086-1.077 8.784-2.887 11.144C9.84 15.986 8.583 16.5 8 16.5s-1.84-.514-3.613-2.856C2.577 11.284.823 7.586 1.5 2.5a1 1 0 0 1 .64-.773c.702-.413 1.88-.812 2.85-1.107C6.046.298 7.298 0 8 0z"/>
-                                <path d="M9.5 6.5a1.5 1.5 0 0 1-1 1.415l.385 1.99a.5.5 0 0 1-.491.595h-.788a.5.5 0 0 1-.49-.595l.384-1.99A1.5 1.5 0 1 1 9.5 6.5z"/>
-                            </svg>
+                        <div class="rounded-circle p-2.5 me-3 shadow-sm d-flex align-items-center justify-content-center" 
+                             style="width: 52px; height: 52px; background-color: #E8F4F8; color: var(--azul-serenidad); font-size: 1.4rem;">
+                            ✦
                         </div>
-                        <h4 class="fw-bold mb-0 text-dark">Protocolo de Desestigmatización</h4>
+                        <div>
+                            <span class="badge rounded-pill px-2.5 py-0.5 small fw-semibold" style="background-color: #E8F1F5; color: var(--azul-serenidad);">Seguridad</span>
+                            <h4 class="fw-bold mb-0 text-dark">Protocolo de Desestigmatización</h4>
+                        </div>
                     </div>
-                    <ul class="text-secondary ps-3 mb-0" style="line-height: 1.8;">
-                        <li><strong>Identidad aislada:</strong> Tu nombre real y credenciales jamás se revelan a los terapeutas ni a otros alumnos[cite: 3].</li>
-                        <li><strong>Visibilidad por Alias:</strong> El personal clínico únicamente interactúa contigo mediante el identificador anónimo que registraste[cite: 3].</li>
-                        <li><strong>Confidencialidad absoluta:</strong> Las notas clínicas son encriptadas y estrictamente privadas para el profesional que te atendió[cite: 3].</li>
+                    <ul class="text-secondary ps-3 mb-0" style="line-height: 1.85;">
+                        <li class="mb-2"><strong>Identidad disociada:</strong> Tu nombre completo y correo institucional jamás se muestran en la agenda operativa ni ante otros usuarios.</li>
+                        <li class="mb-2"><strong>Visibilidad por Alias:</strong> El personal clínico únicamente te identificará por tu seudónimo confidencial (elegido por ti).</li>
+                        <li class="mb-0"><strong>Notas clínicas blindadas:</strong> El expediente de cada consulta queda encriptado y exclusivo para el terapeuta tratante bajo secreto profesional.</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="card h-100 border-0 shadow-sm p-3" style="border-radius: 14px; background-color: #ffffff;">
-                <div class="card-body">
+        <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="card h-100 border-0 shadow-sm p-4 rounded-4 bg-white tilt-card" style="border-top: 5px solid var(--verde-menta) !important;">
+                <div class="card-body p-0">
                     <div class="d-flex align-items-center mb-3">
-                        <div class="rounded-circle p-2 me-3" style="background-color: #E8F5E9; color: #2D6A4F;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
-                                <path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.293zm2.593 2.072a7.01 7.01 0 0 0-.586-.586l.668-.744a8.016 8.016 0 0 1 .723.723l-.744.668zm1.096 1.884c-.116-.36-.26-.708-.43-1.04l.87-.492c.205.398.378.814.516 1.242zM1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m8-5a.5.5 0 0 1 .5.5v3.793l2.854 2.853a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1-.146-.354V3.5a.5.5 0 0 1 .5-.5"/>
-                            </svg>
+                        <div class="rounded-circle p-2.5 me-3 shadow-sm d-flex align-items-center justify-content-center" 
+                             style="width: 52px; height: 52px; background-color: #E8F5E9; color: var(--verde-menta); font-size: 1.4rem;">
+                            ✦
                         </div>
-                        <h4 class="fw-bold mb-0 text-dark">Límites y Transición de Sesiones</h4>
+                        <div>
+                            <span class="badge rounded-pill px-2.5 py-0.5 small fw-semibold" style="background-color: #E2F4EE; color: var(--verde-menta);">Estructura</span>
+                            <h4 class="fw-bold mb-0 text-dark">Límites y Transición de Sesiones</h4>
+                        </div>
                     </div>
-                    <ul class="text-secondary ps-3 mb-0" style="line-height: 1.8;">
-                        <li><strong>Duración estructurada:</strong> Cada sesión está fijada en 45 a 50 minutos exactos[cite: 3].</li>
-                        <li><strong>Pausa de 15 minutos:</strong> Espacio intermedio obligatorio para evitar cruces en pasillos o fatiga[cite: 3].</li>
-                        <li><strong>Cancelación sin juicio:</strong> Si no puedes asistir, liberas el cupo con un clic desde "Mis Citas"[cite: 3].</li>
+                    <ul class="text-secondary ps-3 mb-0" style="line-height: 1.85;">
+                        <li class="mb-2"><strong>Duración estructurada:</strong> Consultas terapéuticas exactas de 45 minutos para maximizar el foco y la efectividad.</li>
+                        <li class="mb-2"><strong>Pausa de descompresión:</strong> 15 minutos obligatorios entre citas para evitar cruces en pasillos y proteger la privacidad.</li>
+                        <li class="mb-0"><strong>Libertad de anulación:</strong> Cancela desde tu panel sin penalización para liberar el espacio a otro compañero.</li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SECCIÓN PSICOEDUCATIVA Y SALUD MENTAL UNIVERSITARIA -->
-    <div class="mb-4">
-        <span class="badge px-3 py-2 text-uppercase fw-semibold" style="background-color: #E8F4F8; color: #2A6F97;">Guía Psicoeducativa</span>
-        <h2 class="fw-bold mt-2 text-dark">Comprendiendo lo que sientes</h2>
-        <p class="text-muted">Aprende a reconocer las diferencias entre el estrés cotidiano, la ansiedad y los signos de alerta.</p>
+    <!-- SECCIÓN: COMPRENDIENDO LO QUE SIENTES -->
+    <div class="mb-4" data-aos="fade-up">
+        <span class="badge px-3 py-1.5 rounded-pill fw-semibold shadow-sm" style="background-color: #E8F4F8; color: var(--azul-serenidad); font-size: 0.85rem;">
+            ✦ Psicoeducación Libre
+        </span>
+        <h2 class="fw-bold mt-2 text-dark display-6">Comprendiendo lo que sientes</h2>
+        <p class="text-muted fs-5">Aprende a reconocer las diferencias entre el estrés cotidiano, la ansiedad y los signos que ameritan acompañamiento profesional.</p>
     </div>
 
-    <div class="row g-4 mb-4">
-        <!-- Tarjeta: Ansiedad -->
-        <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm p-3 rounded-4 bg-white" style="border-top: 4px solid #2A6F97 !important;">
-                <div class="card-body">
-                    <div class="d-flex align-items-center gap-2 mb-3">
-                        <span class="fs-4">🌊</span>
-                        <h5 class="fw-bold mb-0" style="color: #2A6F97;">Ansiedad y Pánico</h5>
+    <div class="row g-4 mb-5">
+        <div class="col-12 col-md-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="card h-100 border-0 shadow-sm p-4 rounded-4 bg-white tilt-card" style="border-top: 5px solid var(--azul-serenidad) !important;">
+                <div class="card-body p-0 d-flex flex-column justify-content-between">
+                    <div>
+                        <span class="badge px-3 py-1 rounded-pill small fw-semibold mb-2" style="background-color: #E1F0FA; color: #0E486B;">
+                            ✦ Respuesta de Alarma
+                        </span>
+                        <h5 class="fw-bold mb-3" style="color: var(--azul-serenidad);">Ansiedad y Pánico</h5>
+                        <p class="small text-secondary mb-3" style="line-height: 1.6;">
+                            Respuesta anticipatoria de alarma intensa ante exámenes, defensas de grado o alta exigencia académica.
+                        </p>
+                        <h6 class="fw-bold text-dark small mb-2">Señales comunes:</h6>
+                        <ul class="small text-muted ps-3 mb-3" style="line-height: 1.7;">
+                            <li>Palpitaciones aceleradas o sensación de ahogo.</li>
+                            <li>Pensamientos catastróficos recurrentes.</li>
+                            <li>Dificultad prolongada para conciliar el sueño.</li>
+                        </ul>
                     </div>
-                    <p class="small text-secondary mb-3">
-                        Respuesta anticipatoria ante un peligro futuro (real o percibido). En la universidad suele detonarse por exámenes o entregas bajo presión[cite: 3].
-                    </p>
-                    <h6 class="fw-bold text-dark small mb-2">Señales comunes:</h6>
-                    <ul class="small text-muted ps-3 mb-3">
-                        <li>Palpitaciones o respiración acelerada.</li>
-                        <li>Pensamientos catastróficos recurrentes.</li>
-                        <li>Insomnio por sobrepensar de noche.</li>
-                    </ul>
-                    <div class="p-2 rounded-3 bg-light border text-muted small">
-                        <strong>Tip rápido:</strong> Prueba la respiración 4-7-8 (Inhala en 4s, sostén 7s y exhala lento en 8s).
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tarjeta: Depresión -->
-        <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm p-3 rounded-4 bg-white" style="border-top: 4px solid #528788 !important;">
-                <div class="card-body">
-                    <div class="d-flex align-items-center gap-2 mb-3">
-                        <span class="fs-4">🌧️</span>
-                        <h5 class="fw-bold mb-0" style="color: #528788;">Depresión y Vacío</h5>
-                    </div>
-                    <p class="small text-secondary mb-3">
-                        Va más allá de la tristeza temporal; es un estado sostenido de desánimo que drena la energía vital e interfiere con el día a día[cite: 3].
-                    </p>
-                    <h6 class="fw-bold text-dark small mb-2">Señales comunes:</h6>
-                    <ul class="small text-muted ps-3 mb-3">
-                        <li>Pérdida de interés en hobbies (anhedonia).</li>
-                        <li>Sensación persistente de inutilidad o culpa.</li>
-                        <li>Dificultad severa para salir de la cama o concentrarse.</li>
-                    </ul>
-                    <div class="p-2 rounded-3 bg-light border text-muted small">
-                        <strong>Recuerda:</strong> Pedir acompañamiento no es debilidad; es una decisión responsable sobre tu salud.
+                    <div class="p-3 rounded-3 bg-light border text-muted small mt-2">
+                        <strong class="text-dark">Técnica Táctica 4x4:</strong> Inhala en 4s, retén en 4s, exhala en 4s y pausa en 4s.
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Tarjeta: Burnout Académico -->
-        <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm p-3 rounded-4 bg-white" style="border-top: 4px solid #E63946 !important;">
-                <div class="card-body">
-                    <div class="d-flex align-items-center gap-2 mb-3">
-                        <span class="fs-4">🔥</span>
-                        <h5 class="fw-bold mb-0" style="color: #E63946;">Burnout Académico</h5>
+        <div class="col-12 col-md-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="card h-100 border-0 shadow-sm p-4 rounded-4 bg-white tilt-card" style="border-top: 5px solid var(--verde-menta) !important;">
+                <div class="card-body p-0 d-flex flex-column justify-content-between">
+                    <div>
+                        <span class="badge px-3 py-1 rounded-pill small fw-semibold mb-2" style="background-color: #E2F4EE; color: #155743;">
+                            ✦ Estado Afectivo
+                        </span>
+                        <h5 class="fw-bold mb-3" style="color: var(--verde-menta);">Depresión y Apatía</h5>
+                        <p class="small text-secondary mb-3" style="line-height: 1.6;">
+                            Estado persistente de desánimo que apaga la energía, la concentración y el placer por actividades habituales.
+                        </p>
+                        <h6 class="fw-bold text-dark small mb-2">Señales comunes:</h6>
+                        <ul class="small text-muted ps-3 mb-3" style="line-height: 1.7;">
+                            <li>Pérdida de interés en la carrera o amistades.</li>
+                            <li>Fatiga extrema que no se repara descansando.</li>
+                            <li>Sentimientos frecuentes de culpa o inutilidad.</li>
+                        </ul>
                     </div>
-                    <p class="small text-secondary mb-3">
-                        Agotamiento físico, mental y emocional derivado del estrés crónico prolongado por exigencias de estudio[cite: 3].
-                    </p>
-                    <h6 class="fw-bold text-dark small mb-2">Señales comunes:</h6>
-                    <ul class="small text-muted ps-3 mb-3">
-                        <li>Cinismo o desapego frente a tu carrera.</li>
-                        <li>Agotamiento crónico que no mejora al dormir.</li>
-                        <li>Bloqueo creativo y baja productividad.</li>
-                    </ul>
-                    <div class="p-2 rounded-3 bg-light border text-muted small">
-                        <strong>Estrategia:</strong> Establece límites de estudio y agenda pausas sin pantallas durante la tarde.
+                    <div class="p-3 rounded-3 bg-light border text-muted small mt-2">
+                        <strong class="text-dark">Estrategia Clínica:</strong> Aplica micro-pasos de 5 min para activar la motivación.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="card h-100 border-0 shadow-sm p-4 rounded-4 bg-white tilt-card" style="border-top: 5px solid var(--rojo-alerta) !important;">
+                <div class="card-body p-0 d-flex flex-column justify-content-between">
+                    <div>
+                        <span class="badge px-3 py-1 rounded-pill small fw-semibold mb-2" style="background-color: #FDE8E8; color: #8A1616;">
+                            ✦ Sobrecarga Crónica
+                        </span>
+                        <h5 class="fw-bold mb-3" style="color: var(--rojo-alerta);">Burnout Académico</h5>
+                        <p class="small text-secondary mb-3" style="line-height: 1.6;">
+                            Agotamiento derivado de semanas continuas de exigencia sin espacios reales de desconexión ni descanso.
+                        </p>
+                        <h6 class="fw-bold text-dark small mb-2">Señales comunes:</h6>
+                        <ul class="small text-muted ps-3 mb-3" style="line-height: 1.7;">
+                            <li>Desapego o cinismo hacia los estudios.</li>
+                            <li>Bloqueos mentales al momento de rendir pruebas.</li>
+                            <li>Irritabilidad recurrente con compañeros y familia.</li>
+                        </ul>
+                    </div>
+                    <div class="p-3 rounded-3 bg-light border text-muted small mt-2">
+                        <strong class="text-dark">Higiene Cognitiva:</strong> Pausas obligatorias de 15 min sin pantallas cada 90 min.
                     </div>
                 </div>
             </div>

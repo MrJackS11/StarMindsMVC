@@ -1,0 +1,199 @@
+@model StarMindsMVC.Models.ArticuloBlog
+@{
+    ViewData["Title"] = Model.Titulo + " - Star Minds";
+    var related = ViewBag.ArticulosRelacionados as IEnumerable<StarMindsMVC.Models.ArticuloBlog> ?? Enumerable.Empty<StarMindsMVC.Models.ArticuloBlog>();
+    
+    // Estimación de tiempo de lectura
+    var rawText = System.Text.RegularExpressions.Regex.Replace(Model.Contenido ?? "", "<.*?>", string.Empty);
+    var wordCount = rawText.Split(new[] { ' ', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).Length;
+    var readingTime = Math.Max(1, (int)Math.Ceiling(wordCount / 180.0));
+
+    // Icono y color temático por categoría
+    string catIcon = "✦";
+    string catBg = "#E8D7F1";
+    string catColor = "#3E2F4C";
+    if (Model.Categoria == "Ansiedad")
+    {
+        catIcon = "🌬️";
+        catBg = "#E1F0FA";
+        catColor = "#1D5C80";
+    }
+    else if (Model.Categoria == "Estrés Académico")
+    {
+        catIcon = "🎯";
+        catBg = "#E2F4EE";
+        catColor = "#266B56";
+    }
+    else if (Model.Categoria == "Autocuidado")
+    {
+        catIcon = "🌿";
+        catBg = "#F4EBF8";
+        catColor = "#5C3370";
+    }
+}
+
+<div class="container py-4 py-lg-5">
+    <!-- Migas de pan / Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb bg-transparent p-0 mb-2">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-muted">Inicio</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Blog" asp-action="Index" class="text-decoration-none text-muted">Recursos & Blog</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Blog" asp-action="Index" asp-route-categoria="@Model.Categoria" class="text-decoration-none" style="color: var(--azul-serenidad);">@Model.Categoria</a></li>
+            <li class="breadcrumb-item active text-truncate" style="max-width: 320px;" aria-current="page">@Model.Titulo</li>
+        </ol>
+    </nav>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10 col-xl-9">
+            <!-- TARJETA PRINCIPAL DEL ARTÍCULO -->
+            <article class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white mb-5">
+                <!-- CABECERA DEL ARTÍCULO -->
+                <div class="p-4 p-md-5 text-white position-relative" 
+                     style="background: radial-gradient(circle at 85% 20%, #2A6F97 0%, #17324D 70%, #0C1E30 100%);">
+                    
+                    <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+                        <span class="badge px-3 py-2 rounded-pill fw-semibold shadow-sm" 
+                              style="background-color: @catBg; color: @catColor; font-size: 0.85rem;">
+                            @catIcon @Model.Categoria
+                        </span>
+                        <span class="badge bg-white bg-opacity-15 text-white rounded-pill px-3 py-1.5 small fw-normal">
+                            ⏱️ ~@readingTime min de lectura
+                        </span>
+                        <span class="badge bg-white bg-opacity-15 text-white rounded-pill px-3 py-1.5 small fw-normal">
+                            📅 @Model.FechaPublicacion.ToString("dd MMMM, yyyy")
+                        </span>
+                    </div>
+
+                    <h1 class="display-6 fw-bold mb-3 text-white lh-sm">
+                        @Model.Titulo
+                    </h1>
+
+                    <div class="d-flex align-items-center gap-3 pt-2 text-white-50 border-top border-white border-opacity-10 small">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="rounded-circle d-inline-flex align-items-center justify-content-center bg-white bg-opacity-20 text-white fw-bold" 
+                                  style="width: 36px; height: 36px; font-size: 0.9rem;">
+                                ✦
+                            </span>
+                            <div>
+                                <div class="text-white fw-semibold" style="line-height: 1.2;">
+                                    @(Model.Autor != null && !string.IsNullOrEmpty(Model.Autor.Correo) ? Model.Autor.Correo.Split('@')[0] : "Gabinete Star Minds")
+                                </div>
+                                <small class="text-white-50" style="font-size: 0.75rem;">Equipo de Orientación y Apoyo Psicológico UPDS</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTENIDO DEL ARTÍCULO -->
+                <div class="card-body p-4 p-md-5">
+                    <div class="article-content fs-5" style="line-height: 1.85; color: #2D3748;">
+                        @Html.Raw(Model.Contenido)
+                    </div>
+
+                    <!-- CAJA DE APOYO Y CONTACTO -->
+                    <div class="mt-5 p-4 rounded-4" style="background: linear-gradient(135deg, #F0F7FA 0%, #E8F1F5 100%); border-left: 5px solid var(--azul-serenidad);">
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                            <div>
+                                <h5 class="fw-bold mb-1" style="color: var(--azul-serenidad);">
+                                    🌱 ¿Necesitas acompañamiento personal?
+                                </h5>
+                                <p class="text-muted small mb-0">
+                                    En Star Minds puedes solicitar orientación psicológica con profesionales de la UPDS de forma 100% confidencial, segura y anónima.
+                                </p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                                {
+                                    <a asp-controller="Citas" asp-action="Agendar" class="btn text-white fw-semibold px-4 py-2 rounded-pill shadow-sm" style="background-color: var(--verde-menta);">
+                                        Reservar Cita Anónima
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Account" asp-action="Login" class="btn text-white fw-semibold px-4 py-2 rounded-pill shadow-sm" style="background-color: var(--azul-serenidad);">
+                                        Ingresar para Agendar
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BOTÓN VOLVER -->
+                    <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
+                        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4 fw-medium">
+                            ← Volver a Recursos & Blog
+                        </a>
+                        <span class="text-muted small">
+                            Star Minds Gabinete Psicológico • UPDS
+                        </span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ARTÍCULOS SUGERIDOS / RELACIONADOS -->
+            @if (related.Any())
+            {
+                <div class="mb-5">
+                    <h4 class="fw-bold mb-3" style="color: var(--azul-serenidad);">
+                        📚 Otras guías recomendadas para ti
+                    </h4>
+                    <div class="row g-3">
+                        @foreach (var r in related)
+                        {
+                            var rText = System.Text.RegularExpressions.Regex.Replace(r.Contenido ?? "", "<.*?>", string.Empty);
+                            var rPreview = rText.Length > 110 ? rText.Substring(0, 110) + "..." : rText;
+                            <div class="col-12 col-md-4">
+                                <div class="card h-100 border-0 shadow-sm rounded-4 p-3 bg-white hover-shadow transition">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="badge rounded-pill small px-2 py-1" style="background-color: #EDF2F7; color: #4A5568;">
+                                            @r.Categoria
+                                        </span>
+                                        <small class="text-muted" style="font-size: 0.72rem;">@r.FechaPublicacion.ToString("dd/MM/yyyy")</small>
+                                    </div>
+                                    <h6 class="fw-bold mb-2" style="color: #2D3748; line-height: 1.3;">
+                                        @r.Titulo
+                                    </h6>
+                                    <p class="text-muted small mb-3 flex-grow-1" style="font-size: 0.82rem;">
+                                        @rPreview
+                                    </p>
+                                    <a asp-action="Detalle" asp-route-id="@r.Id" class="btn btn-sm btn-outline-primary rounded-pill w-100 fw-semibold">
+                                        Leer guía →
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .article-content p {
+        margin-bottom: 1.25rem;
+    }
+    .article-content h2, .article-content h3, .article-content h4 {
+        color: var(--azul-serenidad);
+        font-weight: 700;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+    .article-content ul, .article-content ol {
+        padding-left: 1.5rem;
+        margin-bottom: 1.25rem;
+    }
+    .article-content li {
+        margin-bottom: 0.5rem;
+    }
+    .article-content strong {
+        color: #1A202C;
+    }
+    .hover-shadow {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .hover-shadow:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 22px rgba(0,0,0,0.08) !important;
+    }
+</style>

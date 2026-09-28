@@ -2,13 +2,16 @@
 <html lang="es">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>@ViewData["Title"] - Star Minds Gabinete Psicológico</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <!-- Librerías de animación globales (AOS y Swiper UI) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     
     <style>
         :root {
@@ -27,93 +30,226 @@
             color: var(--gris-carbon);
             overflow-x: hidden;
             position: relative;
+            min-height: 100vh;
         }
 
-        /* Efecto Glow que sigue al Mouse */
+        #stars-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+        }
+
         #cursor-glow {
             position: fixed;
             top: 0;
             left: 0;
-            width: 380px;
-            height: 380px;
+            width: 320px;
+            height: 320px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(109, 89, 122, 0.12) 0%, rgba(42, 111, 151, 0.06) 45%, rgba(0,0,0,0) 70%);
+            background: radial-gradient(circle, rgba(109, 89, 122, 0.14) 0%, rgba(42, 111, 151, 0.07) 40%, rgba(0,0,0,0) 70%);
             pointer-events: none;
             transform: translate(-50%, -50%);
-            z-index: 9999;
-            transition: width 0.3s ease, height 0.3s ease;
+            z-index: -1;
+        }
+
+        header, main, footer {
+            position: relative;
         }
 
         .navbar-starminds {
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(14px);
             border-bottom: 2px solid #e9ecef;
+            z-index: 1030;
+        }
+
+        /* BOTÓN MENÚ RESPONSIVO VISIBLE ÚNICAMENTE EN MÓVIL */
+        .btn-menu-toggle {
+            border: 1.5px solid rgba(42, 111, 151, 0.25) !important;
+            background: rgba(42, 111, 151, 0.06) !important;
+            border-radius: 10px !important;
+            padding: 7px 11px !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 7px;
+            transition: all 0.2s ease;
+            box-shadow: none !important;
+        }
+        @@media (min-width: 992px) {
+            .btn-menu-toggle {
+                display: none !important;
+            }
+        }
+        @@media (max-width: 991.98px) {
+            .btn-menu-toggle {
+                display: inline-flex !important;
+            }
+        }
+        .btn-menu-toggle:hover, .btn-menu-toggle:focus {
+            background: rgba(42, 111, 151, 0.12) !important;
+            border-color: var(--azul-serenidad) !important;
+            box-shadow: 0 0 0 3px rgba(42, 111, 151, 0.15) !important;
+        }
+        .menu-hamburger-icon {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 19px;
+            height: 14px;
+        }
+        .menu-hamburger-icon span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background-color: var(--azul-serenidad);
+            border-radius: 2px;
+            transition: all 0.2s ease;
         }
 
         .nav-link {
             font-weight: 500;
             color: #495057 !important;
+            padding: 8px 12px !important;
             transition: all 0.2s ease;
         }
 
         .nav-link:hover {
             color: var(--morado-calma) !important;
-            transform: translateY(-1px);
         }
 
         .badge-morado {
             background-color: #F1EDF5;
             color: var(--morado-calma);
             border: 1px solid #D8CFE3;
+            white-space: nowrap !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 6px;
+            line-height: 1;
+            flex-shrink: 0;
         }
 
-        /* Reproductor Flotante de Audio */
+        /* DRAWER / DESPLEGABLE EN MÓVIL */
+        @@media (max-width: 991.98px) {
+            body {
+                padding-bottom: 75px;
+            }
+            .navbar-collapse {
+                background: #ffffff;
+                border-radius: 18px;
+                padding: 16px 18px;
+                margin-top: 12px;
+                box-shadow: 0 14px 35px rgba(22, 28, 38, 0.12);
+                border: 1px solid rgba(0, 0, 0, 0.08);
+            }
+            .navbar-nav .nav-link {
+                padding: 11px 14px !important;
+                border-radius: 10px;
+                margin-bottom: 4px;
+                font-size: 0.95rem;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .navbar-nav .nav-link:hover, .navbar-nav .nav-link:focus {
+                background-color: rgba(42, 111, 151, 0.07);
+                color: var(--azul-serenidad) !important;
+            }
+            .nav-auth-card {
+                background-color: #f8f9fa;
+                border-radius: 14px;
+                padding: 14px;
+                margin-top: 10px;
+                border: 1px solid #e9ecef;
+            }
+        }
+
+        /* REPRODUCTOR FLOTANTE ADAPTADO A MÓVIL */
         .music-widget {
             position: fixed;
-            bottom: 24px;
-            right: 24px;
-            background: rgba(30, 35, 42, 0.92);
-            backdrop-filter: blur(12px);
+            bottom: 20px;
+            right: 20px;
+            background: rgba(22, 26, 33, 0.94);
+            backdrop-filter: blur(14px);
             color: #fff;
-            padding: 10px 18px;
+            padding: 8px 16px;
             border-radius: 35px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.35);
             border: 1px solid rgba(255,255,255,0.12);
             z-index: 10000;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .music-btn {
             background: none;
             border: none;
             color: #fff;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             cursor: pointer;
-            padding: 4px;
-            transition: transform 0.2s ease, color 0.2s ease;
+            padding: 3px;
         }
-        .music-btn:hover {
-            color: #C7F9CC;
-            transform: scale(1.15);
+
+        @@media (max-width: 768px) {
+            .music-widget {
+                bottom: 12px;
+                right: 12px;
+                padding: 6px 12px;
+                gap: 8px;
+            }
+            #track-name {
+                max-width: 95px !important;
+                font-size: 0.72rem !important;
+            }
+            #track-sub {
+                display: none !important;
+            }
         }
     </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
-    <!-- Luz estelar seguidora de cursor -->
+    <canvas id="stars-canvas"></canvas>
     <div id="cursor-glow"></div>
 
     <header>
-        <nav class="navbar navbar-expand-lg navbar-starminds py-3 shadow-sm sticky-top">
-            <div class="container">
-                <a class="navbar-brand fw-bold d-flex align-items-center gap-2" asp-area="" asp-controller="Home" asp-action="Index" style="color: var(--azul-serenidad); font-size: 1.3rem;">
+        <nav class="navbar navbar-expand-lg navbar-starminds py-2 py-lg-3 shadow-sm sticky-top">
+            <div class="container-fluid px-3 px-lg-5">
+                <a class="navbar-brand fw-bold d-flex align-items-center gap-2" asp-controller="Home" asp-action="Index" style="color: var(--azul-serenidad); font-size: 1.25rem;">
                     <span style="color: var(--morado-acento);">✦</span> <span>Star Minds</span>
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContenido">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarContenido">
+                
+                <!-- Acciones Rápidas en Móvil + Botón Menú (SOLO VISIBLE EN MÓVIL) -->
+                <div class="d-flex align-items-center gap-2 d-lg-none">
+                    @if (!(User.Identity != null && User.Identity.IsAuthenticated))
+                    {
+                        <a class="btn btn-sm text-white rounded-pill px-3 fw-semibold shadow-sm" asp-controller="Account" asp-action="Login" style="background-color: var(--azul-serenidad); font-size: 0.82rem;">
+                            Ingresar
+                        </a>
+                    }
+                    else
+                    {
+                        <span class="badge badge-morado rounded-pill px-2.5 py-1 small fw-semibold" style="font-size: 0.78rem;">
+                            ✦ @User.Identity.Name
+                        </span>
+                    }
+
+                    <button class="navbar-toggler btn-menu-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContenido" aria-controls="navbarContenido" aria-expanded="false" aria-label="Abrir Menú">
+                        <span class="menu-hamburger-icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                        <span class="small fw-semibold d-none d-sm-inline" style="color: var(--azul-serenidad);">Menú</span>
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse mt-2 mt-lg-0" id="navbarContenido">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3">
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Home" asp-action="Index">Inicio</a>
@@ -122,9 +258,7 @@
                             <a class="nav-link" asp-controller="Home" asp-action="Privacy">Privacidad y Anonimato</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fw-semibold" asp-controller="Home" asp-action="ParaTi" style="color: var(--morado-calma) !important;">
-                                ✦ Para Ti (Muro)
-                            </a>
+                            <a class="nav-link" asp-controller="Blog" asp-action="Index">Recursos & Blog</a>
                         </li>
 
                         @if (User.IsInRole("Estudiante"))
@@ -140,17 +274,30 @@
                                 <a class="nav-link fw-semibold text-primary" asp-controller="Psicologo" asp-action="Agenda">📋 Agenda Terapéutica</a>
                             </li>
                         }
+
+                        @if (User.IsInRole("Administrador"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-primary fw-bold" asp-controller="Admin" asp-action="Dashboard">Métricas y Dirección</a>
+                            </li>
+                        }
+
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold" asp-controller="Home" asp-action="ParaTi" style="color: var(--morado-calma) !important;">
+                                ✦ Para Ti
+                            </a>
+                        </li>
                     </ul>
                     
                     @if (User.Identity != null && User.Identity.IsAuthenticated)
                     {
-                        <div class="d-flex align-items-center gap-3">
-                            <span class="fw-semibold px-3 py-1 rounded-pill badge-morado" style="font-size: 0.9rem;">
+                        <div class="nav-auth-card d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2 gap-lg-3">
+                            <span class="fw-semibold px-3 py-1.5 rounded-pill badge-morado text-center flex-shrink-0" style="font-size: 0.9rem;">
                                 ✦ @User.Identity.Name
                             </span>
-                            <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline m-0">
+                            <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline m-0 w-100 w-lg-auto" onsubmit="stopMusicOnLogout()">
                                 @Html.AntiForgeryToken()
-                                <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3">
+                                <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3 py-2 py-lg-1 w-100 w-lg-auto fw-semibold">
                                     Cerrar Sesión
                                 </button>
                             </form>
@@ -158,9 +305,13 @@
                     }
                     else
                     {
-                        <div class="d-flex align-items-center gap-2">
-                            <a class="btn btn-outline-secondary rounded-3 px-3" asp-controller="Account" asp-action="Login">Iniciar Sesión</a>
-                            <a class="btn text-white rounded-3 px-3 shadow-sm" style="background-color: var(--morado-calma);" asp-controller="Account" asp-action="Register">Registro Anónimo</a>
+                        <div class="nav-auth-card d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2">
+                            <a class="btn btn-outline-secondary rounded-3 px-3 py-2 py-lg-1 text-center fw-semibold w-100 w-lg-auto" asp-controller="Account" asp-action="Login">
+                                Iniciar Sesión
+                            </a>
+                            <a class="btn text-white rounded-3 px-3 py-2 py-lg-1 shadow-sm text-center fw-semibold w-100 w-lg-auto" style="background-color: var(--morado-calma);" asp-controller="Account" asp-action="Register">
+                                ✦ Registro Anónimo
+                            </a>
                         </div>
                     }
                 </div>
@@ -168,31 +319,33 @@
         </nav>
     </header>
 
-    <div class="container flex-grow-1 my-4">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <main role="main" class="flex-grow-1">
+        @RenderBody()
+    </main>
 
-    <!-- REPRODUCTOR DE MÚSICA AMBIENTAL (Tom Odell / Cigarettes After Sex) -->
+    <!-- REPRODUCTOR FLOTANTE -->
     <div class="music-widget">
-        <span style="font-size: 1.1rem;">🎧</span>
+        <span style="font-size: 1.05rem;">🎧</span>
         <div style="line-height: 1.1;">
-            <div class="small fw-semibold" id="track-name" style="font-size: 0.78rem; max-width: 170px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                Música Ambiental
+            <div class="small fw-semibold" id="track-name" style="font-size: 0.78rem; max-width: 140px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                Cargando...
             </div>
-            <small class="text-white-50" style="font-size: 0.68rem;">Star Minds Lo-Fi</small>
+            <small class="text-white-50" style="font-size: 0.65rem;" id="track-sub">Lo-Fi Star Minds</small>
         </div>
-        <button class="music-btn" onclick="togglePlayMusic()" id="btn-play-pause" title="Reproducir/Pausar">▶</button>
-        <button class="music-btn" onclick="nextTrack()" title="Cambiar Canción">⏭</button>
+        <button class="music-btn" onclick="togglePlayMusic()" id="btn-play-pause" title="Reproducir / Pausar">▶</button>
+        <button class="music-btn" onclick="nextTrack()" title="Siguiente Canción">⏭</button>
     </div>
 
-    <!-- Iframe oculto de YouTube para emitir el audio -->
-    <div id="youtube-player" style="display: none;"></div>
+    <audio id="local-audio" preload="auto"></audio>
 
-    <footer class="bg-white border-top py-3 text-center text-muted small mt-auto">
-        <div class="container">
-            &copy; 2026 - Star Minds | Gabinete de Apoyo Psicológico Universitario - UPDS Cochabamba
+    <footer class="bg-white border-top py-3 text-muted small mt-auto mb-5 mb-lg-0">
+        <div class="container d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2">
+            <span>&copy; 2026 - Star Minds | Gabinete de Apoyo Psicológico Universitario - UPDS Cochabamba</span>
+            <div class="d-flex gap-3">
+                <a href="/swagger" target="_blank" class="text-secondary text-decoration-none border px-2 py-1 rounded bg-light">
+                    ⚙️ Swagger API Doc
+                </a>
+            </div>
         </div>
     </footer>
 
@@ -200,71 +353,152 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
-    <!-- Script del Seguidor de Cursor y Audio de Fondo -->
+    <!-- Librerías de animación globales (AOS, VanillaTilt, Swiper UI) -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // 1. Seguimiento del cursor
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof AOS !== 'undefined') {
+                AOS.init({ duration: 750, once: true, offset: 30 });
+            }
+            if (typeof VanillaTilt !== 'undefined') {
+                VanillaTilt.init(document.querySelectorAll(".tilt-card"), {
+                    max: 8,
+                    speed: 400,
+                    glare: true,
+                    "max-glare": 0.15
+                });
+            }
+        });
+    </script>
+
+    <script>
+        // Estrellas
+        const canvas = document.getElementById('stars-canvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        const numStars = window.innerWidth < 768 ? 45 : 85;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initStars();
+        }
+
+        function initStars() {
+            stars = [];
+            for (let i = 0; i < numStars; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 1.4 + 0.4,
+                    alpha: Math.random() * 0.7 + 0.2,
+                    speed: Math.random() * 0.015 + 0.005,
+                    color: Math.random() > 0.4 ? '#6D597A' : '#2A6F97'
+                });
+            }
+        }
+
+        function renderStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(star => {
+                star.alpha += star.speed;
+                if (star.alpha > 0.85 || star.alpha < 0.15) star.speed = -star.speed;
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = star.color;
+                ctx.globalAlpha = Math.abs(star.alpha);
+                ctx.fill();
+            });
+            ctx.globalAlpha = 1;
+            requestAnimationFrame(renderStars);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        renderStars();
+
+        // Seguidor
         const glow = document.getElementById('cursor-glow');
         window.addEventListener('mousemove', (e) => {
             glow.style.left = e.clientX + 'px';
             glow.style.top = e.clientY + 'px';
         });
 
-        // 2. Control de Música con YouTube IFrame API
-        const tracks = [
-            { id: 'J3OPP2vNRjw', title: 'Black Friday (Piano)' },
-            { id: 'SU4GAPmlP2E', title: "Nothing's Gonna Hurt You Baby" }
+        // Música continua
+        const playlist = [
+            { src: '/Audios/black-friday.mp3', title: 'Black Friday', artist: 'Tom Odell' },
+            { src: '/Audios/nothings-gonna-hurt-you-baby.mp3', title: "Nothing's Gonna Hurt You", artist: 'Cigarettes After Sex' }
         ];
-        let currentTrackIndex = 0;
-        let player = null;
-        let isPlaying = false;
 
-        const tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        let currentIdx = parseInt(localStorage.getItem('sm_track_idx') || '0');
+        if (currentIdx >= playlist.length) currentIdx = 0;
 
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtube-player', {
-                height: '0',
-                width: '0',
-                videoId: tracks[currentTrackIndex].id,
-                playerVars: {
-                    'autoplay': 0,
-                    'controls': 0,
-                    'loop': 1,
-                    'playlist': tracks[currentTrackIndex].id
-                },
-                events: {
-                    'onReady': onPlayerReady
-                }
-            });
-        }
+        const audioElement = document.getElementById('local-audio');
+        const playBtn = document.getElementById('btn-play-pause');
 
-        function onPlayerReady() {
-            document.getElementById('track-name').innerText = tracks[currentTrackIndex].title;
+        function loadTrack(idx) {
+            audioElement.src = playlist[idx].src;
+            document.getElementById('track-name').innerText = playlist[idx].title;
+            const sub = document.getElementById('track-sub');
+            if (sub) sub.innerText = playlist[idx].artist;
+            localStorage.setItem('sm_track_idx', idx);
         }
 
         function togglePlayMusic() {
-            if (!player || typeof player.playVideo !== 'function') return;
-            const btn = document.getElementById('btn-play-pause');
-            if (isPlaying) {
-                player.pauseVideo();
-                btn.innerText = '▶';
-                isPlaying = false;
+            if (audioElement.paused) {
+                audioElement.play().then(() => {
+                    playBtn.innerText = '⏸';
+                    localStorage.setItem('sm_music_playing', 'true');
+                }).catch(err => console.log(err));
             } else {
-                player.playVideo();
-                btn.innerText = '⏸';
-                isPlaying = true;
+                audioElement.pause();
+                playBtn.innerText = '▶';
+                localStorage.setItem('sm_music_playing', 'false');
             }
         }
 
         function nextTrack() {
-            if (!player || typeof player.loadVideoById !== 'function') return;
-            currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
-            player.loadVideoById(tracks[currentTrackIndex].id);
-            document.getElementById('track-name').innerText = tracks[currentTrackIndex].title;
-            document.getElementById('btn-play-pause').innerText = '⏸';
-            isPlaying = true;
+            currentIdx = (currentIdx + 1) % playlist.length;
+            loadTrack(currentIdx);
+            audioElement.play().then(() => {
+                playBtn.innerText = '⏸';
+                localStorage.setItem('sm_music_playing', 'true');
+            }).catch(e => console.log(e));
+        }
+
+        audioElement.addEventListener('ended', nextTrack);
+        audioElement.addEventListener('timeupdate', () => {
+            if (!audioElement.paused) {
+                localStorage.setItem('sm_track_time', audioElement.currentTime);
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadTrack(currentIdx);
+            const savedTime = parseFloat(localStorage.getItem('sm_track_time') || '0');
+            const wasPlaying = localStorage.getItem('sm_music_playing') === 'true';
+
+            audioElement.currentTime = savedTime;
+
+            if (wasPlaying) {
+                audioElement.play().then(() => {
+                    playBtn.innerText = '⏸';
+                }).catch(() => {
+                    const resume = () => {
+                        audioElement.play();
+                        playBtn.innerText = '⏸';
+                        window.removeEventListener('click', resume);
+                    };
+                    window.addEventListener('click', resume);
+                });
+            }
+        });
+
+        function stopMusicOnLogout() {
+            localStorage.removeItem('sm_music_playing');
+            localStorage.removeItem('sm_track_time');
         }
     </script>
 

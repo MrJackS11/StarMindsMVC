@@ -23,10 +23,19 @@ public class CitasController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
+        if (User.IsInRole("Psicologo"))
+        {
+            return RedirectToAction("Agenda", "Psicologo");
+        }
+        if (User.IsInRole("Administrador"))
+        {
+            return RedirectToAction("Dashboard", "Admin");
+        }
+
         var estudiante = await ObtenerEstudianteActualAsync();
         if (estudiante == null)
         {
-            return Forbid();
+            return RedirectToAction("AccessDenied", "Account");
         }
 
         var citas = await _context.Citas
@@ -44,6 +53,15 @@ public class CitasController : Controller
     [HttpGet]
     public async Task<IActionResult> Agendar(int? psicologoId, DateTime? fecha)
     {
+        if (User.IsInRole("Psicologo"))
+        {
+            return RedirectToAction("Agenda", "Psicologo");
+        }
+        if (User.IsInRole("Administrador"))
+        {
+            return RedirectToAction("Dashboard", "Admin");
+        }
+
         var psicologos = await _context.Psicologos.Where(p => p.Activo).ToListAsync();
         var fechaSeleccionada = fecha ?? DateTime.Today.AddDays(1);
 

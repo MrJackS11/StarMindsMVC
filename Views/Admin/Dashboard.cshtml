@@ -1,0 +1,183 @@
+@model IEnumerable<StarMindsMVC.Models.Psicologo>
+@{
+    ViewData["Title"] = "Panel de Control Directivo - Star Minds";
+    double tasa = (double)(ViewBag.TasaAsistencia ?? 0.0);
+}
+
+<!-- CABECERA DIRECTIVA UNIFICADA -->
+<section class="w-100 py-4 px-3 px-lg-5 text-white mb-4 position-relative overflow-hidden" 
+         style="background: radial-gradient(circle at 75% 25%, #2A6F97 0%, #152238 65%, #0B1320 100%); border-bottom: 1px solid rgba(255,255,255,0.08);">
+    <div class="container-fluid px-lg-5">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div data-aos="fade-right">
+                <span class="badge mb-2 px-3 py-2 text-white rounded-pill fw-semibold shadow-sm" style="background-color: var(--azul-serenidad); font-size: 0.85rem;">
+                    ✦ Dirección y Gestión Clínica • UPDS
+                </span>
+                <h1 class="display-6 fw-bold mb-1 text-white">Métricas y Gestión Operativa</h1>
+                <p class="text-white-50 mb-0">Consolidado en tiempo real de consultas, tasa de adherencia estudiantil y supervisión de especialistas.</p>
+            </div>
+            <div class="d-none d-md-block text-end" data-aos="fade-left">
+                <span class="badge rounded-pill px-3 py-2 text-white d-inline-flex align-items-center gap-2 shadow-sm" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.22);">
+                    📊 Métricas Automatizadas (HU06)
+                </span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container-fluid px-3 px-lg-5 py-2">
+    <!-- TARJETAS DE MÉTRICAS CON ANIMACIÓN COUNT-UP Y 3D TILT -->
+    <div class="row g-3 mb-4">
+        
+        <!-- KPI 1: Tasa de Asistencia -->
+        <div class="col-12 col-sm-6 col-xl-3" data-aos="fade-up" data-aos-delay="50">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white tilt-card h-100 position-relative overflow-hidden" 
+                 style="border-left: 5px solid var(--azul-serenidad) !important;">
+                <span class="text-muted small fw-semibold text-uppercase tracking-wider">Tasa de Asistencia</span>
+                <div class="d-flex align-items-baseline gap-1 my-2">
+                    <h2 class="fw-bold mb-0 count-up" data-target="@ViewBag.TasaAsistencia" style="color: var(--azul-serenidad); font-size: 2.2rem;">
+                        0
+                    </h2>
+                    <span class="fw-bold fs-4" style="color: var(--azul-serenidad);">%</span>
+                </div>
+                <div class="progress mb-2 rounded-pill" style="height: 6px;">
+                    <div class="progress-bar rounded-pill" role="progressbar" style="width: @(tasa)%; background: linear-gradient(90deg, #2A6F97, #528788);" aria-valuenow="@tasa" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <small class="text-muted">Cálculo de citas efectivas</small>
+            </div>
+        </div>
+
+        <!-- KPI 2: Consultas Completadas -->
+        <div class="col-12 col-sm-6 col-xl-3" data-aos="fade-up" data-aos-delay="100">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white tilt-card h-100 position-relative overflow-hidden" 
+                 style="border-left: 5px solid var(--verde-menta) !important;">
+                <span class="text-muted small fw-semibold text-uppercase tracking-wider">Consultas Completadas</span>
+                <div class="my-2">
+                    <h2 class="fw-bold mb-0 text-success count-up" data-target="@ViewBag.CitasCompletadas" style="font-size: 2.2rem;">
+                        0
+                    </h2>
+                </div>
+                <small class="text-muted">Sesiones finalizadas con éxito</small>
+            </div>
+        </div>
+
+        <!-- KPI 3: Inasistencias (No-Show) -->
+        <div class="col-12 col-sm-6 col-xl-3" data-aos="fade-up" data-aos-delay="150">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white tilt-card h-100 position-relative overflow-hidden" 
+                 style="border-left: 5px solid var(--rojo-alerta) !important;">
+                <span class="text-muted small fw-semibold text-uppercase tracking-wider">Inasistencias (No-Show)</span>
+                <div class="my-2">
+                    <h2 class="fw-bold mb-0 text-danger count-up" data-target="@ViewBag.CitasNoAsistio" style="font-size: 2.2rem;">
+                        0
+                    </h2>
+                </div>
+                <small class="text-muted">Espacios sin aviso de cancelación</small>
+            </div>
+        </div>
+
+        <!-- KPI 4: Volumen Total Agendado -->
+        <div class="col-12 col-sm-6 col-xl-3" data-aos="fade-up" data-aos-delay="200">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white tilt-card h-100 position-relative overflow-hidden" 
+                 style="border-left: 5px solid var(--morado-calma) !important;">
+                <span class="text-muted small fw-semibold text-uppercase tracking-wider">Volumen Total Agendado</span>
+                <div class="my-2">
+                    <h2 class="fw-bold mb-0 count-up" data-target="@ViewBag.TotalCitas" style="color: var(--morado-calma); font-size: 2.2rem;">
+                        0
+                    </h2>
+                </div>
+                <small class="text-muted">Total histórico en el sistema</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABLA DE ESPECIALISTAS ACTIVOS -->
+    <div class="card border-0 shadow-sm rounded-4 bg-white p-4 p-md-5 mb-5" data-aos="fade-up" data-aos-delay="250">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <span class="badge px-3 py-1.5 rounded-pill fw-semibold shadow-sm mb-1" style="background-color: #E2F4EE; color: #1E6652;">
+                    ✦ Plantel Profesional
+                </span>
+                <h4 class="fw-bold mb-0" style="color: var(--azul-serenidad);">Especialistas Habilitados</h4>
+            </div>
+            <span class="badge bg-light text-muted border rounded-pill px-3 py-2 small">
+                @Model.Count() especialistas registrados
+            </span>
+        </div>
+
+        <div class="table-responsive rounded-3 overflow-hidden" style="border: 1px solid #E9ECEF;">
+            <table class="table table-hover align-middle mb-0">
+                <thead style="background: linear-gradient(90deg, #F8F9FA 0%, #F1F4F8 100%);">
+                    <tr class="small fw-bold text-secondary">
+                        <th class="py-3 px-3">Especialista Terapeuta</th>
+                        <th class="py-3 px-3">Rama / Especialidad</th>
+                        <th class="py-3 px-3">Jornada de Atención</th>
+                        <th class="py-3 px-3">Canal Virtual</th>
+                    </tr>
+                </thead>
+                <tbody class="small">
+                    @foreach (var terapeuta in Model)
+                    {
+                        <tr>
+                            <td class="fw-bold px-3 py-3 text-dark">
+                                <span class="rounded-circle d-inline-flex align-items-center justify-content-center me-2 text-white" 
+                                      style="width: 32px; height: 32px; background: linear-gradient(135deg, var(--azul-serenidad), var(--verde-menta)); font-size: 0.8rem;">
+                                    ✦
+                                </span>
+                                @terapeuta.NombreCompleto
+                            </td>
+                            <td class="px-3 py-3">
+                                <span class="badge rounded-pill px-3 py-1.5 fw-semibold" style="background-color: #E1F0FA; color: #0E486B;">
+                                    @terapeuta.Especialidad
+                                </span>
+                            </td>
+                            <td class="px-3 py-3 text-muted">
+                                08:00 - 13:00 (Bloques 45 min + 15 min pausa)
+                            </td>
+                            <td class="px-3 py-3">
+                                @if (!string.IsNullOrEmpty(terapeuta.EnlaceVideollamada))
+                                {
+                                    <a href="@terapeuta.EnlaceVideollamada" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3 py-1 fw-semibold">
+                                        Enlace Asignado ↗
+                                    </a>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-light text-muted border rounded-pill px-2.5 py-1">Presencial Gabinete</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Animación suave de conteo numérico (CountUp)
+        document.addEventListener('DOMContentLoaded', function () {
+            const counters = document.querySelectorAll('.count-up');
+            const speed = 40; // velocidad de animación
+
+            counters.forEach(counter => {
+                const target = parseFloat(counter.getAttribute('data-target') || '0');
+                const isFloat = target % 1 !== 0;
+                let current = 0;
+                const increment = Math.max(target / speed, isFloat ? 0.2 : 1);
+
+                const updateCount = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.innerText = isFloat ? current.toFixed(1) : Math.ceil(current);
+                        requestAnimationFrame(updateCount);
+                    } else {
+                        counter.innerText = isFloat ? target.toFixed(1) : target;
+                    }
+                };
+
+                updateCount();
+            });
+        });
+    </script>
+}

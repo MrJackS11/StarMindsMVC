@@ -1,104 +1,176 @@
 @{
-    ViewData["Title"] = "Para Ti - Muro Anónimo Universitario";
+    ViewData["Title"] = "Para Ti - Muro Anónimo";
 }
 
-<div class="container-fluid px-lg-5 py-4">
-    <!-- Encabezado con toque Morado / Lavanda -->
-    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
-        <div>
-            <span class="badge px-3 py-2 text-uppercase fw-semibold" style="background-color: #F1EDF5; color: #6D597A; border: 1px solid #D8CFE3;">
-                ✦ Pizarrón Colectivo FYP
-            </span>
-            <h2 class="fw-bold mt-2 mb-1" style="color: #2A6F97;">Muro de Desahogo & Logros</h2>
-            <p class="text-muted mb-0">Un espacio interactivo y 100% anónimo para desahogarte, compartir tus victorias y apoyarnos entre compañeros.</p>
-        </div>
-        <div class="mt-3 mt-md-0 d-flex gap-2">
-            <span class="badge rounded-pill bg-white border text-secondary px-3 py-2 shadow-sm d-flex align-items-center gap-1">
-                🔒 Sin nombres reales
-            </span>
-            <span class="badge rounded-pill bg-white border text-secondary px-3 py-2 shadow-sm d-flex align-items-center gap-1">
-                ☕ Música ambiental activa
-            </span>
+<!-- CABECERA NOCTURNA ESTRELLADA UNIFICADA -->
+<section class="w-100 py-4 py-md-5 px-3 px-lg-5 text-white position-relative overflow-hidden" 
+         style="background: radial-gradient(circle at 75% 25%, #2A6F97 0%, #152238 65%, #0B1320 100%); border-bottom: 1px solid rgba(255,255,255,0.08);">
+    <div class="container-fluid px-lg-5">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div data-aos="fade-right">
+                <span class="badge mb-2 px-3 py-2 text-white rounded-pill fw-semibold shadow-sm" style="background-color: var(--verde-menta); font-size: 0.85rem;">
+                    ✦ Muro Colectivo de Empatía • Star Minds
+                </span>
+                <h1 class="display-6 fw-bold mb-2 text-white" style="font-size: clamp(1.8rem, 4vw, 2.6rem); line-height: 1.2;">
+                    Pizarrón de Desahogo & Logros
+                </h1>
+                <p class="text-white-50 mb-0" style="font-size: 1.05rem; max-width: 680px; line-height: 1.6;">
+                    Un espacio 100% anónimo para compartir avances, soltar cargas y dejar palabras de aliento a la comunidad universitaria sin juicio social.
+                </p>
+            </div>
+            
+            <div class="d-flex flex-wrap gap-2 mt-2 mt-md-0" data-aos="fade-left">
+                <span class="badge rounded-pill px-3 py-2 text-white d-flex align-items-center gap-1.5 shadow-sm" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.22);">
+                    🔒 Sin nombres reales
+                </span>
+                <span class="badge rounded-pill px-3 py-2 text-white d-flex align-items-center gap-1.5 shadow-sm" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.22);">
+                    🎧 Música ambiental activa
+                </span>
+            </div>
         </div>
     </div>
+</section>
 
-    <!-- Pizarrón Gigante Dark Board -->
-    <div class="card border-0 shadow-lg p-4 p-md-5 mb-5" style="background: radial-gradient(circle at 20% 20%, #252A34 0%, #15181E 100%); border-radius: 24px; min-height: 650px; position: relative; border: 1px solid rgba(255,255,255,0.06);">
+<!-- PIZARRÓN GIGANTE FLUIDO Y RESPONSIVO -->
+<div class="container-fluid px-3 px-lg-5 py-4">
+    <div class="card border-0 shadow-lg p-3 p-md-5 mb-5 position-relative overflow-hidden" 
+         style="background: radial-gradient(circle at 20% 20%, #20252F 0%, #12151B 100%); border-radius: 26px; min-height: 650px; border: 1px solid rgba(255,255,255,0.12);"
+         data-aos="fade-up">
         
-        <!-- Barra de herramientas flotante -->
-        <div class="p-3 rounded-4 mb-5 shadow-sm border border-secondary border-opacity-25" style="background-color: rgba(18, 21, 26, 0.85); backdrop-filter: blur(8px);">
+        <!-- Barra de herramientas adaptativa -->
+        <div class="p-3.5 rounded-4 mb-4 shadow-sm border border-secondary border-opacity-25" 
+             style="background-color: rgba(14, 17, 22, 0.88); backdrop-filter: blur(14px);">
             <div class="row g-2 align-items-center">
                 <div class="col-12 col-md-7">
-                    <input type="text" id="postitInput" class="form-control bg-dark text-white border-secondary px-3 py-2" 
+                    <input type="text" id="postitInput" class="form-control bg-dark text-white border-secondary px-3 py-2.5 rounded-3 shadow-none" 
                            placeholder="Escribe una pequeña victoria, un desahogo o palabras de ánimo (máx. 140 caracteres)..." maxlength="140">
                 </div>
                 <div class="col-6 col-md-3">
-                    <select id="postitColor" class="form-select bg-dark text-white border-secondary py-2">
-                        <option value="note-purple">💜 Morado Calma</option>
-                        <option value="note-yellow">💛 Amarillo Sol</option>
-                        <option value="note-mint">💚 Verde Esperanza</option>
-                        <option value="note-blue">💙 Azul Serenidad</option>
-                        <option value="note-pink">💖 Rosa Empatía</option>
+                    <select id="postitColor" class="form-select bg-dark text-white border-secondary py-2.5 rounded-3 shadow-none">
+                        <option value="note-purple">✦ Morado Calma</option>
+                        <option value="note-yellow">✦ Amarillo Sol</option>
+                        <option value="note-mint">✦ Verde Esperanza</option>
+                        <option value="note-blue">✦ Azul Serenidad</option>
+                        <option value="note-pink">✦ Rosa Empatía</option>
                     </select>
                 </div>
                 <div class="col-6 col-md-2 d-grid">
-                    <button class="btn fw-semibold text-white py-2 shadow" style="background: linear-gradient(135deg, #6D597A 0%, #528788 100%); border-radius: 10px;" onclick="pegarPostIt()">
-                        📌 Pegar Post-it
+                    <button class="btn fw-semibold text-white py-2.5 shadow-sm rounded-3 d-flex align-items-center justify-content-center gap-1.5" 
+                            style="background: linear-gradient(135deg, #6D597A 0%, #528788 100%);" 
+                            onclick="pegarPostIt()">
+                        <span>📌</span> Pegar Post-it
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Tablero de Post-its -->
-        <div class="row g-4" id="muroPostIts">
-            <div class="col-6 col-md-4 col-lg-3">
-                <div class="postit note-purple">
-                    <p class="mb-2">"Sentir que no puedes hoy no significa que no podrás mañana. Descansa, no te rindas."</p>
-                    <small class="text-muted text-end d-block">— Anónimo_UPDS</small>
+        <!-- Muro de Post-its con cuadrícula flexible y animación escalonada (AOS + 3D Tilt) -->
+        <div class="row g-3 g-md-4" id="muroPostIts">
+            
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="50">
+                <div class="postit note-purple tilt-card">
+                    <div>
+                        <span class="badge bg-white bg-opacity-35 text-dark rounded-pill px-2.5 py-0.5 small mb-2 fw-semibold">✦ Ánimo</span>
+                        <p class="mb-2">"Sentir que no puedes hoy no significa que no podrás mañana. Descansa, no te rindas."</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center pt-2 border-top border-dark border-opacity-10">
+                        <button class="btn btn-sm btn-link text-dark text-decoration-none p-0 empathy-btn" onclick="darEmpatia(this)">
+                            💜 <span class="empathy-count">14</span>
+                        </button>
+                        <small class="text-muted">— Anónimo_UPDS</small>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-6 col-md-4 col-lg-3">
-                <div class="postit note-yellow">
-                    <p class="mb-2">"Todas las estrellas tienen una razon para brillar."</p>
-                    <small class="text-muted text-end d-block">— Leo</small>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="postit note-yellow tilt-card">
+                    <div>
+                        <span class="badge bg-white bg-opacity-35 text-dark rounded-pill px-2.5 py-0.5 small mb-2 fw-semibold">✦ Victoria</span>
+                        <p class="mb-2">"Todas las estrellas tienen una razón para brillar."</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center pt-2 border-top border-dark border-opacity-10">
+                        <button class="btn btn-sm btn-link text-dark text-decoration-none p-0 empathy-btn" onclick="darEmpatia(this)">
+                            ✨ <span class="empathy-count">22</span>
+                        </button>
+                        <small class="text-muted">— Leo</small>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-6 col-md-4 col-lg-3">
-                <div class="postit note-mint">
-                    <p class="mb-2">"Si hoy solo lograste levantarte y salir a caminar un rato, ya es un paso enorme."</p>
-                    <small class="text-muted text-end d-block">— Val</small>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="150">
+                <div class="postit note-mint tilt-card">
+                    <div>
+                        <span class="badge bg-white bg-opacity-35 text-dark rounded-pill px-2.5 py-0.5 small mb-2 fw-semibold">✦ Calma</span>
+                        <p class="mb-2">"Si hoy solo lograste levantarte y salir a caminar un rato, ya es un paso enorme."</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center pt-2 border-top border-dark border-opacity-10">
+                        <button class="btn btn-sm btn-link text-dark text-decoration-none p-0 empathy-btn" onclick="darEmpatia(this)">
+                            🌱 <span class="empathy-count">19</span>
+                        </button>
+                        <small class="text-muted">— Val</small>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-6 col-md-4 col-lg-3">
-                <div class="postit note-blue">
-                    <p class="mb-2">"Los fuertes en la fe debemos apoyar a los débiles, en vez de hacer lo que nos agrada."</p>
-                    <small class="text-muted text-end d-block">— Estudiante_Cba</small>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="postit note-blue tilt-card">
+                    <div>
+                        <span class="badge bg-white bg-opacity-35 text-dark rounded-pill px-2.5 py-0.5 small mb-2 fw-semibold">✦ Solidaridad</span>
+                        <p class="mb-2">"Los fuertes en la fe debemos apoyar a los débiles, en vez de hacer lo que nos agrada."</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center pt-2 border-top border-dark border-opacity-10">
+                        <button class="btn btn-sm btn-link text-dark text-decoration-none p-0 empathy-btn" onclick="darEmpatia(this)">
+                            💙 <span class="empathy-count">11</span>
+                        </button>
+                        <small class="text-muted">— Estudiante_Cba</small>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-6 col-md-4 col-lg-3">
-                <div class="postit note-pink">
-                    <p class="mb-2">"Tu valor como persona no lo define la nota de un examen parcial."</p>
-                    <small class="text-muted text-end d-block">— EstrellaSerena</small>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="250">
+                <div class="postit note-pink tilt-card">
+                    <div>
+                        <span class="badge bg-white bg-opacity-35 text-dark rounded-pill px-2.5 py-0.5 small mb-2 fw-semibold">✦ Autocuidado</span>
+                        <p class="mb-2">"Tu valor como persona no lo define la nota de un examen parcial."</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center pt-2 border-top border-dark border-opacity-10">
+                        <button class="btn btn-sm btn-link text-dark text-decoration-none p-0 empathy-btn" onclick="darEmpatia(this)">
+                            💖 <span class="empathy-count">31</span>
+                        </button>
+                        <small class="text-muted">— EstrellaSerena</small>
+                    </div>
                 </div>
             </div>
+
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="postit note-purple tilt-card">
+                    <div>
+                        <span class="badge bg-white bg-opacity-35 text-dark rounded-pill px-2.5 py-0.5 small mb-2 fw-semibold">✦ Desahogo</span>
+                        <p class="mb-2">"Pedir ayuda no es señal de debilidad; es la mayor muestra de valentía para cuidar tu mente."</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center pt-2 border-top border-dark border-opacity-10">
+                        <button class="btn btn-sm btn-link text-dark text-decoration-none p-0 empathy-btn" onclick="darEmpatia(this)">
+                            💜 <span class="empathy-count">16</span>
+                        </button>
+                        <small class="text-muted">— AlmaLibre</small>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
 
 <style>
     .postit {
-        padding: 20px;
-        min-height: 165px;
-        border-radius: 6px;
-        box-shadow: 0 8px 18px rgba(0,0,0,0.4);
+        padding: 22px;
+        min-height: 180px;
+        border-radius: 12px;
+        box-shadow: 0 10px 22px rgba(0,0,0,0.35);
         font-family: 'Poppins', sans-serif;
-        font-size: 0.93rem;
+        font-size: 0.94rem;
         color: #1e1e1e;
-        line-height: 1.5;
+        line-height: 1.55;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -107,17 +179,49 @@
     }
 
     .postit:hover {
-        transform: scale(1.08) rotate(0deg) !important;
-        box-shadow: 0 14px 28px rgba(0,0,0,0.55);
+        transform: scale(1.05) rotate(0deg) !important;
+        box-shadow: 0 16px 32px rgba(0,0,0,0.5) !important;
         z-index: 50;
     }
 
-    /* Colores Pastel de los Post-it */
+    .empathy-btn {
+        font-size: 0.85rem;
+        transition: transform 0.2s ease;
+    }
+    .empathy-btn:hover {
+        transform: scale(1.2);
+    }
+    .empathy-pulse {
+        animation: pulseHeart 0.35s ease;
+    }
+    @@keyframes pulseHeart {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.4); }
+        100% { transform: scale(1); }
+    }
+
+    /* Colores Pastel Suaves Terapéuticos */
     .note-purple { background-color: #E8D7F1; transform: rotate(-1.5deg); }
     .note-yellow { background-color: #FFF385; transform: rotate(1deg); }
     .note-mint   { background-color: #C7F9CC; transform: rotate(-2deg); }
     .note-pink   { background-color: #FFCCD5; transform: rotate(2deg); }
     .note-blue   { background-color: #CFEAFF; transform: rotate(-1deg); }
+
+    .pop-in-note {
+        animation: popInAnimation 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    @@keyframes popInAnimation {
+        from { transform: scale(0.6) translateY(30px); opacity: 0; }
+        to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+
+    @@media (max-width: 576px) {
+        .postit {
+            min-height: 140px;
+            padding: 16px;
+            transform: none !important;
+        }
+    }
 </style>
 
 @section Scripts {
@@ -134,20 +238,48 @@
 
             const muro = document.getElementById('muroPostIts');
             const col = document.createElement('div');
-            col.className = 'col-6 col-md-4 col-lg-3';
+            col.className = 'col-12 col-sm-6 col-md-4 col-lg-3 pop-in-note';
 
-            const deg = (Math.random() * 5 - 2.5).toFixed(1);
+            const deg = (Math.random() * 4 - 2).toFixed(1);
             const autorActual = '@(User.Identity?.IsAuthenticated == true ? User.Identity.Name : "Anónimo")';
 
             col.innerHTML = `
-                <div class="postit ${color}" style="transform: rotate(${deg}deg);">
-                    <p class="mb-2">"${texto}"</p>
-                    <small class="text-muted text-end d-block">— ${autorActual}</small>
+                <div class="postit ${color} tilt-card" style="transform: rotate(${deg}deg);">
+                    <div>
+                        <span class="badge bg-white bg-opacity-35 text-dark rounded-pill px-2.5 py-0.5 small mb-2 fw-semibold">✦ Mensaje Reciente</span>
+                        <p class="mb-2">"${texto}"</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center pt-2 border-top border-dark border-opacity-10">
+                        <button class="btn btn-sm btn-link text-dark text-decoration-none p-0 empathy-btn" onclick="darEmpatia(this)">
+                            💜 <span class="empathy-count">1</span>
+                        </button>
+                        <small class="text-muted">— ${autorActual}</small>
+                    </div>
                 </div>
             `;
 
             muro.prepend(col);
             input.value = '';
+
+            // Reinicializar VanillaTilt para la nueva tarjeta
+            if (typeof VanillaTilt !== 'undefined') {
+                VanillaTilt.init(col.querySelectorAll(".tilt-card"), {
+                    max: 8,
+                    speed: 400,
+                    glare: true,
+                    "max-glare": 0.15
+                });
+            }
+        }
+
+        function darEmpatia(btn) {
+            const countSpan = btn.querySelector('.empathy-count');
+            if (countSpan) {
+                let current = parseInt(countSpan.innerText || '0');
+                countSpan.innerText = current + 1;
+                btn.classList.add('empathy-pulse');
+                setTimeout(() => btn.classList.remove('empathy-pulse'), 350);
+            }
         }
     </script>
 }

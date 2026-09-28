@@ -1,0 +1,88 @@
+@{
+    ViewData["Title"] = "Acceso Restringido - Star Minds";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white text-center">
+                <div class="mb-4">
+                    <span class="rounded-circle d-inline-flex align-items-center justify-content-center shadow-sm" 
+                          style="width: 72px; height: 72px; background-color: #F8F9FA; border: 2px solid #E9ECEF; font-size: 2rem; color: var(--azul-serenidad);">
+                        ✦
+                    </span>
+                </div>
+
+                <span class="badge px-3 py-1.5 rounded-pill mb-3 fw-semibold align-self-center" style="background-color: #F1EDF5; color: var(--morado-calma);">
+                    Seguridad y Control de Acceso (RBAC)
+                </span>
+
+                <h3 class="fw-bold mb-2" style="color: var(--azul-serenidad);">
+                    Acceso Restringido
+                </h3>
+
+                <p class="text-muted small mb-4" style="line-height: 1.6;">
+                    La sección a la que intentas ingresar requiere un perfil o rol específico en el sistema para garantizar la confidencialidad y el orden institucional.
+                </p>
+
+                <div class="p-3 rounded-3 mb-4 text-start small" style="background-color: #F8F9FA; border-left: 4px solid var(--azul-serenidad);">
+                    <div class="fw-semibold text-dark mb-1">Estado de tu sesión actual:</div>
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        <div class="text-muted">
+                            Usuario: <strong>@User.Identity.Name</strong> 
+                            @(User.IsInRole("Psicologo") ? "(Rol: Especialista / Psicólogo)" : "")
+                            @(User.IsInRole("Administrador") ? "(Rol: Director / Administrador)" : "")
+                            @(User.IsInRole("Estudiante") ? "(Rol: Estudiante Registrado)" : "")
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-muted">No has iniciado sesión o tu sesión ha expirado.</div>
+                    }
+                </div>
+
+                <div class="d-flex flex-column gap-2">
+                    @if (User.IsInRole("Psicologo"))
+                    {
+                        <a asp-controller="Psicologo" asp-action="Agenda" class="btn text-white rounded-pill py-2 fw-semibold shadow-sm" style="background-color: var(--azul-serenidad);">
+                            Ir a mi Agenda Terapéutica
+                        </a>
+                    }
+                    else if (User.IsInRole("Administrador"))
+                    {
+                        <a asp-controller="Admin" asp-action="Dashboard" class="btn text-white rounded-pill py-2 fw-semibold shadow-sm" style="background-color: var(--azul-serenidad);">
+                            Ir al Panel de Métricas y Dirección
+                        </a>
+                    }
+                    else if (User.IsInRole("Estudiante"))
+                    {
+                        <a asp-controller="Citas" asp-action="Index" class="btn text-white rounded-pill py-2 fw-semibold shadow-sm" style="background-color: var(--verde-menta);">
+                            Ir a Mis Citas
+                        </a>
+                    }
+
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary rounded-pill py-2 fw-medium">
+                        ← Volver a la Página Principal
+                    </a>
+
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        <form asp-controller="Account" asp-action="Logout" method="post" class="mt-2">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-link text-danger text-decoration-none small">
+                                Cerrar sesión e ingresar con otra cuenta
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a asp-controller="Account" asp-action="Login" class="btn btn-link text-decoration-none small text-muted">
+                            Iniciar sesión con tu cuenta institucional
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

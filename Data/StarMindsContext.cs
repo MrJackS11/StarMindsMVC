@@ -13,6 +13,7 @@ public class StarMindsContext : DbContext
     public DbSet<Psicologo> Psicologos { get; set; }
     public DbSet<Cita> Citas { get; set; }
     public DbSet<NotaClinica> NotasClinicas => Set<NotaClinica>();
+    public DbSet<ArticuloBlog> ArticulosBlog { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -29,6 +30,12 @@ public class StarMindsContext : DbContext
             .HasOne(c => c.Psicologo)
             .WithMany(p => p.Citas)
             .HasForeignKey(c => c.PsicologoId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<ArticuloBlog>()
+            .HasOne(a => a.Autor)
+            .WithMany()
+            .HasForeignKey(a => a.AutorId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

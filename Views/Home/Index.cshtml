@@ -1,74 +1,405 @@
-﻿@{
-    ViewData["Title"] = "Gabinete Psicológico Universitario";
+@{
+    ViewData["Title"] = "Gabinete Psicológico Universitario - Star Minds";
 }
 
-<div class="container py-4">
-    <!-- Hero Section -->
-    <div class="row align-items-center mb-5 py-4 px-3 rounded-4 shadow-sm bg-white" style="border-left: 6px solid #2A6F97;">
-        <div class="col-lg-7">
-            <span class="badge mb-2 px-3 py-2 text-white rounded-pill" style="background-color: #528788; font-size: 0.85rem;">
-                Espacio 100% Confidencial y Gratuito
-            </span>
-            <h1 class="display-5 fw-bold mb-3" style="color: #2A6F97;">
-                Tu bienestar emocional importa tanto como tu rendimiento académico.
-            </h1>
-            <p class="lead text-secondary mb-4" style="font-size: 1.1rem; line-height: 1.6;">
-                En <strong>Star Minds</strong> te brindamos contención y acompañamiento psicológico sin riesgos de exposición. Regístrate con un alias o código anónimo y agenda sesiones con nuestros especialistas sin temor al juicio social.
-            </p>
-            <div class="d-flex flex-wrap gap-3">
-                <a asp-controller="Account" asp-action="Register" class="btn btn-lg text-white shadow-sm" style="background-color: #528788; border-radius: 10px; font-weight: 500;">
-                    Comenzar con un Alias Anónimo
-                </a>
-                <a asp-controller="Account" asp-action="Login" class="btn btn-lg shadow-sm" style="border: 2px solid #2A6F97; color: #2A6F97; border-radius: 10px; font-weight: 500;">
-                    Acceder a mi Portal
-                </a>
-            </div>
-        </div>
-        <div class="col-lg-5 text-center mt-4 mt-lg-0">
-            <div class="p-4 rounded-4" style="background-color: #F8F9FA; border: 1px dashed #cbd5e1;">
-                <div style="font-size: 3.5rem; color: #2A6F97;">✦</div>
-                <h5 class="fw-bold mt-2" style="color: #2A6F97;">Protocolo Discreto Star Minds</h5>
-                <p class="small text-muted mb-0">
-                    Los terapeutas solo conocerán tu identificador anónimo. No revelamos tu identidad ni almacenamos registros que expongan tu privacidad en pantalla.
+<!-- LIBRERÍAS DE ANIMACIÓN: AOS, SWIPER Y VANILLA-TILT (ESTILO SKIPER.UI / SHADCN) -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<!-- BANNER HERO NOCTURNO Y CÓSMICO -->
+<section class="w-100 py-5 px-3 px-lg-5 text-white position-relative overflow-hidden" 
+         style="background: radial-gradient(circle at 75% 35%, #2A6F97 0%, #152238 60%, #0B1320 100%); min-height: 84vh; display: flex; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08);">
+    
+    <!-- Destellos Estelares Flotantes -->
+    <div class="star-sparkle" style="position: absolute; top: 18%; right: 40%; font-size: 2rem; color: #C7F9CC; opacity: 0.85;">✦</div>
+    <div class="star-sparkle" style="position: absolute; top: 40%; right: 48%; font-size: 1.4rem; color: #FFF385; opacity: 0.7;">✦</div>
+    <div class="star-sparkle" style="position: absolute; bottom: 20%; right: 35%; font-size: 1.8rem; color: #E8D7F1; opacity: 0.8;">✦</div>
+
+    <div class="container-fluid px-lg-5 position-relative" style="z-index: 2;">
+        <div class="row align-items-center g-4">
+            
+            <!-- Columna Izquierda: Mensaje y Acciones -->
+            <div class="col-lg-7" data-aos="fade-right" data-aos-duration="900">
+                <span class="badge mb-3 px-3 py-2 text-white rounded-pill fw-semibold shadow-sm" style="background-color: var(--verde-menta); font-size: 0.85rem;">
+                    ✦ Espacio 100% Confidencial y Gratuito • UPDS
+                </span>
+
+                <h5 class="text-uppercase tracking-wider fw-bold text-white-50 small mb-2">STAR MINDS GABINETE PSICOLÓGICO</h5>
+                <h1 class="display-4 fw-bold mb-3 text-white" style="line-height: 1.15; font-size: calc(2rem + 1.8vw);">
+                    Todas las estrellas tienen una razón para brillar.
+                </h1>
+                
+                <p class="lead mb-4 text-white-50 fs-5" style="line-height: 1.7; max-width: 650px;">
+                    Un espacio seguro, anónimo y discreto para tu bienestar psicológico. Agenda sesiones con nuestros especialistas sin temor al juicio social ni a la exposición pública.
                 </p>
+
+                <!-- Botones Dinámicos Responsivos -->
+                <div class="hero-btn-group">
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        @if (User.IsInRole("Estudiante"))
+                        {
+                            <a asp-controller="Citas" asp-action="Agendar" class="btn hero-btn text-white shadow" style="background-color: var(--verde-menta);">
+                                ✦ Agendar Cita Discreta
+                            </a>
+                            <a asp-controller="Citas" asp-action="Index" class="btn hero-btn btn-outline-light shadow">
+                                Mis Citas Activas
+                            </a>
+                            <a asp-controller="Home" asp-action="ParaTi" class="btn hero-btn shadow text-white" style="background-color: var(--morado-calma);">
+                                ✦ Muro Para Ti
+                            </a>
+                        }
+                        else if (User.IsInRole("Psicologo"))
+                        {
+                            <a asp-controller="Psicologo" asp-action="Agenda" class="btn hero-btn text-white shadow" style="background-color: var(--verde-menta);">
+                                📋 Abrir Agenda Terapéutica
+                            </a>
+                        }
+                        else if (User.IsInRole("Administrador"))
+                        {
+                            <a asp-controller="Admin" asp-action="Dashboard" class="btn hero-btn text-white shadow" style="background-color: var(--azul-serenidad);">
+                                📊 Panel de Dirección y Métricas
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <a asp-controller="Account" asp-action="Register" class="btn hero-btn text-white shadow" style="background-color: var(--verde-menta);">
+                            ✦ Comenzar con un Alias Anónimo
+                        </a>
+                        <a asp-controller="Account" asp-action="Login" class="btn hero-btn btn-outline-light shadow">
+                            Acceder a mi Portal
+                        </a>
+                        <a asp-controller="Blog" asp-action="Index" class="btn hero-btn text-white-50 btn-link text-decoration-none">
+                            Ver Guías de Bienestar →
+                        </a>
+                    }
+                </div>
             </div>
+
+            <!-- Columna Derecha: Tarjeta Estelar Traslúcida con Efecto 3D Tilt (Skiper UI Style) -->
+            <div class="col-lg-5 text-center" data-aos="zoom-in" data-aos-duration="1000">
+                <div class="p-4 p-md-5 rounded-4 shadow-lg mx-auto tilt-card glassmorphic-hero-card" 
+                     style="background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(24px); border: 1.5px solid rgba(255,255,255,0.22); max-width: 480px; transform-style: preserve-3d;">
+                    <div style="font-size: 3.8rem; color: #FFF385; text-shadow: 0 0 25px rgba(255, 243, 133, 0.7); transform: translateZ(30px);">
+                        ✦
+                    </div>
+                    <h3 class="fw-bold mt-2 text-white" style="transform: translateZ(25px);">Protocolo Discreto</h3>
+                    <p class="text-white-50 mb-4" style="line-height: 1.6; transform: translateZ(20px);">
+                        Los terapeutas solo conocerán tu identificador anónimo. No almacenamos registros que expongan tu privacidad en pantalla ni ante terceros.
+                    </p>
+                    <div class="badge px-4 py-2.5 rounded-pill fw-normal shadow-sm" 
+                         style="background-color: rgba(42, 111, 151, 0.65); border: 1px solid rgba(255,255,255,0.3); font-size: 0.9rem; transform: translateZ(35px);">
+                        ✦ Aquí puedes descansar, yo cuido de ti.
+                    </div>
+                </div>
+            </div>
+
         </div>
+    </div>
+</section>
+
+<!-- SECCIÓN: SHOWCASE DE PILARES Y SERVICIOS (INSPIRADO EN SKIPER80 PROJECTS SHOWCASE) -->
+<section class="container-fluid px-3 px-lg-5 py-5 mt-2">
+    <div class="text-center mb-5" data-aos="fade-up">
+        <span class="badge px-3 py-1.5 rounded-pill fw-semibold shadow-sm mb-2" style="background-color: #E8F4F8; color: var(--azul-serenidad); font-size: 0.85rem;">
+            ✦ Servicios Clínicos y Módulos
+        </span>
+        <h2 class="fw-bold text-dark display-6">Ecosistema Integral de Salud Mental</h2>
+        <p class="text-muted mx-auto" style="max-width: 650px;">
+            Herramientas digitales diseñadas bajo el marco de ética psicológica, confidencialidad y contención inmediata.
+        </p>
     </div>
 
-    <!-- Pilares del servicio -->
+    <!-- Carrusel Showcase 3D tipo Skiper80 -->
+    <div class="swiper mySwiperShowcase pb-5" data-aos="fade-up" data-aos-delay="150">
+        <div class="swiper-wrapper">
+            
+            <!-- Slide 1: Citas -->
+            <div class="swiper-slide">
+                <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white showcase-card tilt-card" style="border-top: 5px solid var(--azul-serenidad) !important;">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 58px; height: 58px; background: #E1F0FA; color: var(--azul-serenidad); font-size: 1.5rem;">
+                        ✦
+                    </div>
+                    <span class="badge rounded-pill px-3 py-1 small fw-semibold mb-2 align-self-start" style="background-color: #E8F1F5; color: var(--azul-serenidad);">
+                        Atención Personalizada
+                    </span>
+                    <h5 class="fw-bold mb-2 text-dark">Sesiones Terapéuticas 1 a 1</h5>
+                    <p class="text-muted small mb-4 flex-grow-1" style="line-height: 1.6;">
+                        Elige modalidad virtual o presencial en bloques de 45 minutos. Todo el proceso está coordinado bajo estricto secreto profesional.
+                    </p>
+                    <a asp-controller="Citas" asp-action="Agendar" class="btn btn-sm text-white rounded-pill px-3 py-1.5 fw-semibold align-self-start" style="background-color: var(--azul-serenidad);">
+                        Agendar Sesión →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Slide 2: Muro Para Ti -->
+            <div class="swiper-slide">
+                <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white showcase-card tilt-card" style="border-top: 5px solid var(--morado-calma) !important;">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 58px; height: 58px; background: #F1EDF5; color: var(--morado-calma); font-size: 1.5rem;">
+                        ✦
+                    </div>
+                    <span class="badge rounded-pill px-3 py-1 small fw-semibold mb-2 align-self-start" style="background-color: #F4EBF8; color: var(--morado-calma);">
+                        Comunidad Empática
+                    </span>
+                    <h5 class="fw-bold mb-2 text-dark">Muro Anónimo "✦ Para Ti"</h5>
+                    <p class="text-muted small mb-4 flex-grow-1" style="line-height: 1.6;">
+                        Un espacio seguro para compartir notas de desahogo, frases de aliento y reflexiones universitarias sin exponer tu identidad.
+                    </p>
+                    <a asp-controller="Home" asp-action="ParaTi" class="btn btn-sm text-white rounded-pill px-3 py-1.5 fw-semibold align-self-start" style="background-color: var(--morado-calma);">
+                        Visitar Muro →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Slide 3: Blog & Psicoeducación -->
+            <div class="swiper-slide">
+                <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white showcase-card tilt-card" style="border-top: 5px solid var(--verde-menta) !important;">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 58px; height: 58px; background: #E2F4EE; color: var(--verde-menta); font-size: 1.5rem;">
+                        ✦
+                    </div>
+                    <span class="badge rounded-pill px-3 py-1 small fw-semibold mb-2 align-self-start" style="background-color: #E2F4EE; color: var(--verde-menta);">
+                        Libre Acceso
+                    </span>
+                    <h5 class="fw-bold mb-2 text-dark">Guías Psicoeducativas</h5>
+                    <p class="text-muted small mb-4 flex-grow-1" style="line-height: 1.6;">
+                        Artículos clínicos redactados por especialistas sobre técnicas de respiración 4x4, estrés académico, higiene del sueño y apego.
+                    </p>
+                    <a asp-controller="Blog" asp-action="Index" class="btn btn-sm text-white rounded-pill px-3 py-1.5 fw-semibold align-self-start" style="background-color: var(--verde-menta);">
+                        Explorar Guías →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Slide 4: Protocolo de Crisis -->
+            <div class="swiper-slide">
+                <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white showcase-card tilt-card" style="border-top: 5px solid #E63946 !important;">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 58px; height: 58px; background: #FDE8E8; color: #E63946; font-size: 1.5rem;">
+                        ✦
+                    </div>
+                    <span class="badge rounded-pill px-3 py-1 small fw-semibold mb-2 align-self-start" style="background-color: #FDE8E8; color: #9B1C1C;">
+                        Línea de Ayuda 24/7
+                    </span>
+                    <h5 class="fw-bold mb-2 text-dark">Contención Inmediata</h5>
+                    <p class="text-muted small mb-4 flex-grow-1" style="line-height: 1.6;">
+                        Acceso directo a la línea nacional de prevención y apoyo psicológico gratuito (800 11 3040) para situaciones de crisis aguda.
+                    </p>
+                    <a href="tel:800113040" class="btn btn-sm text-white rounded-pill px-3 py-1.5 fw-semibold align-self-start" style="background-color: #E63946;">
+                        Llamar 800 11 3040
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+</section>
+
+<!-- SECCIÓN: CÓMO FUNCIONA (PASO A PASO) -->
+<section class="container py-5">
+    <div class="text-center mb-5" data-aos="fade-up">
+        <span class="badge px-3 py-1.5 text-uppercase fw-semibold" style="background-color: #E8F4F8; color: var(--azul-serenidad); font-size: 0.85rem;">
+            ✦ Flujo Simple
+        </span>
+        <h2 class="fw-bold mt-2 text-dark">¿Cómo funciona Star Minds?</h2>
+        <p class="text-muted">Un proceso de tres pasos diseñado para cuidar tu privacidad en todo momento.</p>
+    </div>
+
     <div class="row g-4 text-center">
-        <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm p-4 rounded-4 bg-white">
-                <div class="rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; background-color: #e8f1f5; color: #2A6F97; font-size: 1.5rem;">
-                    🛡️
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="card h-100 border-0 shadow-sm p-4 rounded-4 bg-white tilt-card" style="border-bottom: 4px solid var(--azul-serenidad) !important;">
+                <div class="rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 65px; height: 65px; background-color: #e8f1f5; color: var(--azul-serenidad); font-size: 1.6rem;">
+                    ✦
                 </div>
-                <h5 class="fw-bold" style="color: #2A6F97;">Anonimato Garantizado</h5>
-                <p class="text-muted small">
-                    Elige un alias con el que te sientas seguro. Tu nombre real queda aislado bajo estrictas políticas de privacidad institucional.
+                <h5 class="fw-bold" style="color: var(--azul-serenidad);">1. Registro con Alias</h5>
+                <p class="text-muted small mb-0" style="line-height: 1.6;">
+                    Crea tu cuenta usando el código o alias que prefieras. Tu nombre real queda aislado y protegido en el servidor.
                 </p>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm p-4 rounded-4 bg-white">
-                <div class="rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; background-color: #e6f2f2; color: #528788; font-size: 1.5rem;">
-                    ⏱️
+
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="card h-100 border-0 shadow-sm p-4 rounded-4 bg-white tilt-card" style="border-bottom: 4px solid var(--verde-menta) !important;">
+                <div class="rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 65px; height: 65px; background-color: #e6f2f2; color: var(--verde-menta); font-size: 1.6rem;">
+                    ✦
                 </div>
-                <h5 class="fw-bold" style="color: #528788;">Sesiones Estructuradas</h5>
-                <p class="text-muted small">
-                    Consultas de 45 a 50 minutos con pausas obligatorias intermedias para evitar solapamientos y respetar los tiempos de atención.
+                <h5 class="fw-bold" style="color: var(--verde-menta);">2. Cita en Bloques Verdes</h5>
+                <p class="text-muted small mb-0" style="line-height: 1.6;">
+                    Elige el especialista y el bloque de 45 min disponible en color verde menta, con pausas de descanso garantizadas.
                 </p>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm p-4 rounded-4 bg-white">
-                <div class="rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; background-color: #f1f5f9; color: #212529; font-size: 1.5rem;">
-                    📖
+
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="card h-100 border-0 shadow-sm p-4 rounded-4 bg-white tilt-card" style="border-bottom: 4px solid var(--morado-calma) !important;">
+                <div class="rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 65px; height: 65px; background-color: #F1EDF5; color: var(--morado-calma); font-size: 1.6rem;">
+                    ✦
                 </div>
-                <h5 class="fw-bold" style="color: #212529;">Recursos Abiertos</h5>
-                <p class="text-muted small">
-                    Accede libremente a artículos psicoeducativos y ejercicios de autocuidado emocional sin necesidad de registro obligatorio.
+                <h5 class="fw-bold" style="color: var(--morado-calma);">3. Seguimiento Confidencial</h5>
+                <p class="text-muted small mb-0" style="line-height: 1.6;">
+                    Sin filas, sin juicios, sin ruido exterior. Solo un espacio seguro donde tu dolor es escuchado y tu privacidad blindada.
                 </p>
             </div>
         </div>
     </div>
-</div>
+</section>
+
+<!-- SECCIÓN: BANNER DE IMPACTO Y LÍNEA DE CRISIS -->
+<section class="container-fluid px-3 px-lg-5 py-4 mb-4" data-aos="fade-up">
+    <div class="p-4 p-md-5 rounded-4 text-white text-center text-md-start d-flex flex-column flex-md-row justify-content-between align-items-center gap-4 shadow"
+         style="background: linear-gradient(135deg, #0B1320 0%, #152238 40%, #2A6F97 80%, #528788 100%);">
+        <div>
+            <span class="badge bg-white bg-opacity-20 text-white rounded-pill px-3 py-1.5 small fw-semibold mb-2">
+                ✦ Gabinete de Apoyo Psicológico Universitario • UPDS Cochabamba
+            </span>
+            <h3 class="fw-bold text-white mb-1">Tu salud emocional es tan importante como tu carrera universitaria.</h3>
+            <p class="text-white-50 small mb-0" style="max-width: 700px;">
+                No estás solo en tus momentos de dificultad. Da el primer paso hacia tu tranquilidad hoy mismo.
+            </p>
+        </div>
+        <div class="d-flex flex-wrap gap-2 flex-shrink-0">
+            @if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                <a asp-controller="Citas" asp-action="Agendar" class="btn text-white fw-semibold px-4 py-2.5 rounded-pill shadow-sm" style="background-color: var(--verde-menta);">
+                    ✦ Agendar Cita Ahora
+                </a>
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Register" class="btn text-white fw-semibold px-4 py-2.5 rounded-pill shadow-sm" style="background-color: var(--verde-menta);">
+                    ✦ Registro Confidencial
+                </a>
+            }
+            <a asp-controller="Blog" asp-action="Index" class="btn btn-outline-light px-3.5 py-2.5 rounded-pill fw-medium">
+                Ver Recursos
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+    .hero-btn-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .hero-btn {
+        border-radius: 12px;
+        font-weight: 600;
+        padding: 12px 22px;
+        font-size: 1rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .hero-btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .star-sparkle {
+        animation: pulseSparkle 3.5s infinite ease-in-out;
+    }
+
+    @@keyframes pulseSparkle {
+        0%, 100% { transform: scale(1); opacity: 0.6; }
+        50% { transform: scale(1.35); opacity: 0.95; }
+    }
+
+    /* ESTILOS SWIPER Y TARJETAS SHOWCASE (ESTILO SKIPER.UI) */
+    .showcase-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .showcase-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 32px rgba(42, 111, 151, 0.14) !important;
+    }
+
+    .swiper-pagination-bullet-active {
+        background-color: var(--azul-serenidad) !important;
+        width: 24px !important;
+        border-radius: 6px !important;
+    }
+
+    @@media (max-width: 768px) {
+        .hero-btn-group {
+            flex-direction: column;
+            width: 100%;
+            gap: 10px;
+        }
+
+        .hero-btn {
+            width: 100%;
+            padding: 13px 18px;
+            font-size: 0.98rem;
+            text-align: center;
+        }
+    }
+</style>
+
+@section Scripts {
+    <!-- AOS ANIMATION SCRIPT -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- VANILLA TILT SCRIPT (3D PERSPECTIVE EFECTO SKIPER80) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+    <!-- SWIPER JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Inicializar Animate On Scroll (AOS)
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 60
+            });
+
+            // Inicializar Efecto 3D Tilt en las tarjetas con aceleración de hardware
+            if (typeof VanillaTilt !== 'undefined') {
+                VanillaTilt.init(document.querySelectorAll(".tilt-card"), {
+                    max: 10,
+                    speed: 400,
+                    glare: true,
+                    "max-glare": 0.18
+                });
+            }
+
+            // Inicializar Carrusel Showcase tipo Skiper80
+            if (document.querySelector('.mySwiperShowcase')) {
+                new Swiper('.mySwiperShowcase', {
+                    slidesPerView: 1,
+                    spaceBetween: 22,
+                    loop: true,
+                    grabCursor: true,
+                    autoplay: {
+                        delay: 4000,
+                        disableOnInteraction: false,
+                        pauseOnMouseEnter: true
+                    },
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true
+                    },
+                    breakpoints: {
+                        640: {
+                            slidesPerView: 2,
+                            spaceBetween: 20
+                        },
+                        1024: {
+                            slidesPerView: 3,
+                            spaceBetween: 24
+                        },
+                        1280: {
+                            slidesPerView: 4,
+                            spaceBetween: 24
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+}

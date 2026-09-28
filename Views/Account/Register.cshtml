@@ -1,71 +1,144 @@
 @model StarMindsMVC.Models.RegistroViewModel
-
 @{
-    ViewData["Title"] = "Registro Confidencial";
+    ViewData["Title"] = "Registro Confidencial - Star Minds";
 }
 
-<div class="container mt-4">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow border-0 rounded-4" style="border-top: 6px solid #2A6F97 !important;">
-                <div class="card-body p-4 p-md-5">
-                    <div class="text-center mb-4">
-                        <h3 class="fw-bold" style="color: #2A6F97;">Star Minds</h3>
-                        <p class="text-muted small">Registro confidencial para estudiantes</p>
-                    </div>
+<div class="cosmos-container d-flex align-items-center justify-content-center py-5 px-3">
+    <!-- Destellos Estelares -->
+    <div class="star-sparkle" style="top: 10%; left: 15%; font-size: 2rem; color: #FFF385;">✦</div>
+    <div class="star-sparkle" style="top: 20%; right: 18%; font-size: 1.4rem; color: #C7F9CC;">✦</div>
+    <div class="star-sparkle" style="bottom: 12%; left: 20%; font-size: 1.7rem; color: #E8D7F1;">✦</div>
+    <div class="star-sparkle" style="bottom: 18%; right: 15%; font-size: 1.2rem; color: #FFF385;">✦</div>
 
-                    <form asp-action="Register" method="post">
-                        @Html.AntiForgeryToken()
-                        <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+    <div class="card glass-card p-4 p-md-5 shadow-lg border-0 text-white" style="width: 100%; max-width: 540px;">
+        <div class="text-center mb-4">
+            <span class="fs-1 d-block mb-1" style="color: var(--verde-menta); text-shadow: 0 0 15px rgba(82,135,136,0.6);">✦</span>
+            <h2 class="fw-bold mb-1 tracking-wide text-white">Registro Confidencial</h2>
+            <p class="small text-white-50 mb-0">Crea tu identidad anónima para solicitar apoyo psicológico</p>
+        </div>
 
-                        <div class="mb-3">
-                            <label asp-for="Alias" class="form-label fw-semibold text-secondary">Alias o Código Anónimo *</label>
-                            <input asp-for="Alias" class="form-control py-2" placeholder="Ej: EstrellaAzul" />
-                            <small class="text-muted d-block mt-1">Este identificador es el único visible para los psicólogos.</small>
-                            <span asp-validation-for="Alias" class="text-danger small"></span>
-                        </div>
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger py-2 px-3 small border-0 rounded-3 text-center" style="background-color: rgba(230, 57, 70, 0.85); color: #fff;">
+                @Html.ValidationSummary(false, "", new { @class = "mb-0 list-unstyled" })
+            </div>
+        }
 
-                        <div class="mb-3">
-                            <label asp-for="Correo" class="form-label fw-semibold text-secondary">Correo Institucional *</label>
-                            <input asp-for="Correo" class="form-control py-2" placeholder="usuario@upds.edu.bo" />
-                            <span asp-validation-for="Correo" class="text-danger small"></span>
-                        </div>
+        <form asp-action="Register" method="post">
+            @Html.AntiForgeryToken()
 
-                        <div class="mb-3">
-                            <label asp-for="Password" class="form-label fw-semibold text-secondary">Contraseña *</label>
-                            <input asp-for="Password" type="password" class="form-control py-2" placeholder="••••••••" />
-                            <span asp-validation-for="Password" class="text-danger small"></span>
-                        </div>
+            <div class="mb-3">
+                <label asp-for="Alias" class="form-label small fw-semibold text-white">Alias o Código Anónimo *</label>
+                <input asp-for="Alias" class="form-control glass-input" placeholder="Ej: EstrellaAzul o UPDS-2026" required />
+                <span asp-validation-for="Alias" class="text-danger small"></span>
+                <small class="form-text text-white-50" style="font-size: 0.78rem;">
+                    🔒 Este nombre es el único que verán los terapeutas en agenda.
+                </small>
+            </div>
 
-                        <div class="mb-3">
-                            <label asp-for="NombreReal" class="form-label fw-semibold text-secondary">Nombre Completo (Opcional)</label>
-                            <input asp-for="NombreReal" class="form-control py-2" placeholder="Tu nombre real (privado)" />
-                        </div>
+            <div class="mb-3">
+                <label asp-for="Correo" class="form-label small fw-semibold text-white">Correo Institucional *</label>
+                <input asp-for="Correo" class="form-control glass-input" placeholder="usuario@upds.edu.bo" required autocomplete="username" />
+                <span asp-validation-for="Correo" class="text-danger small"></span>
+            </div>
 
-                        <div class="mb-4">
-                            <label asp-for="CodigoInstitucional" class="form-label fw-semibold text-secondary">Código Estudiantil (Opcional)</label>
-                            <input asp-for="CodigoInstitucional" class="form-control py-2" placeholder="Ej: SIS-102938" />
-                        </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label small fw-semibold text-white">Contraseña *</label>
+                <input asp-for="Password" type="password" class="form-control glass-input" placeholder="••••••••" required autocomplete="new-password" />
+                <span asp-validation-for="Password" class="text-danger small"></span>
+            </div>
 
-                        <div class="d-grid mb-3">
-                            <button type="submit" class="btn text-white py-2 fw-semibold shadow-sm" style="background-color: #528788; border-radius: 8px;">
-                                Crear Cuenta Confidencial
-                            </button>
-                        </div>
-
-                        <div class="text-center mt-3 pt-2 border-top">
-                            <span class="text-muted small">¿Ya tienes cuenta?</span>
-                            <a asp-action="Login" class="fw-semibold text-decoration-none ms-1" style="color: #2A6F97;">
-                                Inicia Sesión
-                            </a>
-                        </div>
-                    </form>
+            <div class="row g-2 mb-4">
+                <div class="col-md-6">
+                    <label asp-for="NombreReal" class="form-label small fw-semibold text-white-50">Nombre Completo (Opcional)</label>
+                    <input asp-for="NombreReal" class="form-control glass-input" placeholder="Tu nombre real (privado)" />
+                    <span asp-validation-for="NombreReal" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="CodigoInstitucional" class="form-label small fw-semibold text-white-50">Código Estudiantil (Opcional)</label>
+                    <input asp-for="CodigoInstitucional" class="form-control glass-input" placeholder="Ej: SIS-102938" />
+                    <span asp-validation-for="CodigoInstitucional" class="text-danger small"></span>
                 </div>
             </div>
+
+            <button type="submit" class="btn btn-mint-custom w-100 py-2 fw-semibold shadow">
+                Crear Cuenta Confidencial
+            </button>
+        </form>
+
+        <div class="text-center mt-4 pt-3 border-top border-white border-opacity-10">
+            <p class="small text-white-50 mb-0">
+                ¿Ya tienes cuenta activa? 
+                <a asp-action="Login" class="text-decoration-none fw-bold" style="color: #CFEAFF;">
+                    Inicia Sesión aquí
+                </a>
+            </p>
         </div>
     </div>
 </div>
 
+<style>
+    .cosmos-container {
+        position: relative;
+        min-height: 88vh;
+        background: radial-gradient(circle at 50% 30%, #1A3A54 0%, #101B2B 55%, #080D15 100%);
+        overflow: hidden;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .star-sparkle {
+        position: absolute;
+        opacity: 0.6;
+        animation: pulseStar 3.5s infinite alternate ease-in-out;
+        pointer-events: none;
+    }
+
+    @@keyframes pulseStar {
+        0% { transform: scale(0.85); opacity: 0.3; }
+        100% { transform: scale(1.15); opacity: 0.85; }
+    }
+
+    .glass-card {
+        background: rgba(22, 28, 38, 0.74) !important;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        border-radius: 22px;
+    }
+
+    .glass-input {
+        background: rgba(255, 255, 255, 0.08) !important;
+        border: 1px solid rgba(255, 255, 255, 0.18) !important;
+        color: #fff !important;
+        border-radius: 10px;
+        padding: 10px 14px;
+        transition: all 0.25s ease;
+    }
+
+    .glass-input:focus {
+        background: rgba(255, 255, 255, 0.13) !important;
+        border-color: var(--verde-menta) !important;
+        box-shadow: 0 0 12px rgba(82, 135, 136, 0.35) !important;
+    }
+
+    .glass-input::placeholder {
+        color: rgba(255, 255, 255, 0.35);
+    }
+
+    .btn-mint-custom {
+        background-color: var(--verde-menta) !important;
+        border: 1px solid rgba(255,255,255,0.15) !important;
+        color: #fff !important;
+        border-radius: 10px;
+        transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .btn-mint-custom:hover {
+        background-color: #436e6f !important;
+        transform: translateY(-2px);
+    }
+</style>
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <partial name="_ValidationScriptsPartial" />
 }

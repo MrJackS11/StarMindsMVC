@@ -1,0 +1,567 @@
+@model IEnumerable<StarMindsMVC.Models.ArticuloBlog>
+@{
+    ViewData["Title"] = "Recursos de Salud Mental - Star Minds";
+    
+    // Función auxiliar para limpiar HTML de los resúmenes
+    Func<string, string> cleanText = html => {
+        if (string.IsNullOrEmpty(html)) return string.Empty;
+        var text = System.Text.RegularExpressions.Regex.Replace(html, "<.*?>", " ");
+        text = System.Net.WebUtility.HtmlDecode(text);
+        text = System.Text.RegularExpressions.Regex.Replace(text, @"\s+", " ").Trim();
+        return text;
+    };
+}
+
+<!-- ESTILOS DE SWIPER UI -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<!-- CABECERA PRINCIPAL CON ESTILO TERAPÉUTICO -->
+<section class="w-100 py-5 px-3 px-lg-5 text-white mb-4 position-relative overflow-hidden" 
+         style="background: radial-gradient(circle at 75% 25%, #2A6F97 0%, #152238 65%, #0B1320 100%); border-bottom: 1px solid rgba(255,255,255,0.08);">
+    <div class="container-fluid px-lg-5 text-center position-relative" style="z-index: 2;">
+        <span class="badge mb-3 px-3 py-2 text-white rounded-pill fw-semibold shadow-sm" style="background-color: var(--verde-menta); font-size: 0.85rem;">
+            ✦ Espacio Psicoeducativo Libre • UPDS
+        </span>
+        <h1 class="display-5 fw-bold mb-3 text-white">Guías y Herramientas de Bienestar</h1>
+        <p class="text-white-50 mx-auto fs-5 mb-4" style="max-width: 680px;">
+            Lecturas clínicas accesibles, anónimas y gratuitas para fortalecer tu salud emocional y rendimiento universitario.
+        </p>
+
+        <!-- BUSCADOR EN VIVO DE ARTÍCULOS -->
+        <div class="mx-auto" style="max-width: 520px;">
+            <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden bg-white p-1">
+                <span class="input-group-text bg-transparent border-0 ps-3 text-muted">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search text-muted" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                    </svg>
+                </span>
+                <input type="text" id="blog-search-input" class="form-control border-0 shadow-none ps-2" 
+                       placeholder="Buscar por tema (ansiedad, sueño, depresión, apego...)" 
+                       style="font-size: 0.95rem;">
+                <button class="btn text-white rounded-pill px-4 fw-semibold" style="background-color: var(--azul-serenidad);" type="button">
+                    Buscar
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container-fluid px-3 px-lg-5 py-2">
+
+    <!-- SECCIÓN SWIPER UI: CARRUSEL DE GUÍAS DESTACADAS -->
+    @if (Model.Any())
+    {
+        <div class="mb-5 position-relative">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <span class="badge rounded-pill px-3 py-1.5 fw-semibold shadow-sm" style="background-color: #F1EDF5; color: var(--morado-calma);">
+                        ✦ Carrusel Interactivo • Swiper UI
+                    </span>
+                    <h3 class="fw-bold mt-1 mb-0" style="color: var(--azul-serenidad);">Guías Destacadas de la Semana</h3>
+                </div>
+                <!-- Controles Swiper -->
+                <div class="d-flex gap-2">
+                    <button class="btn btn-sm btn-outline-secondary rounded-circle swiper-btn-prev d-flex align-items-center justify-content-center shadow-sm" style="width: 40px; height: 40px; font-size: 1.2rem;">
+                        ‹
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary rounded-circle swiper-btn-next d-flex align-items-center justify-content-center shadow-sm" style="width: 40px; height: 40px; font-size: 1.2rem;">
+                        ›
+                    </button>
+                </div>
+            </div>
+
+            <!-- Contenedor Swiper -->
+            <div class="swiper mySwiperBlog pb-5">
+                <div class="swiper-wrapper">
+                    @foreach (var feat in Model)
+                    {
+                        var featClean = cleanText(feat.Contenido);
+                        var featSnippet = featClean.Length > 115 ? featClean.Substring(0, 115) + "..." : featClean;
+                        
+                        string fBadgeBg = "#E1F0FA";
+                        string fBadgeColor = "#1D5C80";
+                        string fBorderColor = "#2A6F97";
+                        if (feat.Categoria == "Estrés Académico") { fBadgeBg = "#E2F4EE"; fBadgeColor = "#266B56"; fBorderColor = "#528788"; }
+                        else if (feat.Categoria == "Autocuidado") { fBadgeBg = "#F4EBF8"; fBadgeColor = "#5C3370"; fBorderColor = "#7B2CBF"; }
+                        else if (feat.Categoria == "Depresión") { fBadgeBg = "#FDE8E8"; fBadgeColor = "#9B1C1C"; fBorderColor = "#E63946"; }
+                        else if (feat.Categoria == "Apego") { fBadgeBg = "#EBF5FB"; fBadgeColor = "#1A5276"; fBorderColor = "#2A6F97"; }
+
+                        <div class="swiper-slide">
+                            <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white d-flex flex-column justify-content-between position-relative swiper-card-custom"
+                                 style="border-top: 5px solid @fBorderColor !important; min-height: 250px;">
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="badge px-3 py-1 rounded-pill small fw-semibold" style="background-color: @fBadgeBg; color: @fBadgeColor;">
+                                            ✦ @feat.Categoria
+                                        </span>
+                                        <span class="badge bg-light text-muted border rounded-pill px-2.5 py-1 small">
+                                            Destacado
+                                        </span>
+                                    </div>
+                                    <h5 class="fw-bold mb-2 lh-base" style="color: #1F2937;">@feat.Titulo</h5>
+                                    <p class="text-muted small mb-3" style="line-height: 1.6;">@featSnippet</p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-2">
+                                    <small class="text-muted" style="font-size: 0.78rem;">@feat.FechaPublicacion.ToString("dd/MM/yyyy")</small>
+                                    <a asp-action="Detalle" asp-route-id="@feat.Id" class="btn btn-sm fw-semibold text-white px-3 py-1.5 rounded-pill shadow-sm" style="background-color: var(--verde-menta);">
+                                        Leer guía →
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <!-- Paginación Swiper -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    }
+
+    <!-- FILTRO DE CATEGORÍAS ELEGANTE -->
+    <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
+        <a asp-action="Index" class="btn btn-sm rounded-pill px-3 py-2 fw-medium @(string.IsNullOrEmpty(ViewBag.CategoriaSeleccionada) ? "btn-primary shadow-sm" : "btn-light border text-muted")">
+            ✦ Todas las Guías
+        </a>
+        <a asp-action="Index" asp-route-categoria="Ansiedad" class="btn btn-sm rounded-pill px-3 py-2 fw-medium @(ViewBag.CategoriaSeleccionada == "Ansiedad" ? "btn-primary shadow-sm" : "btn-light border text-muted")">
+            Ansiedad
+        </a>
+        <a asp-action="Index" asp-route-categoria="Estrés Académico" class="btn btn-sm rounded-pill px-3 py-2 fw-medium @(ViewBag.CategoriaSeleccionada == "Estrés Académico" ? "btn-primary shadow-sm" : "btn-light border text-muted")">
+            Estrés Académico
+        </a>
+        <a asp-action="Index" asp-route-categoria="Autocuidado" class="btn btn-sm rounded-pill px-3 py-2 fw-medium @(ViewBag.CategoriaSeleccionada == "Autocuidado" ? "btn-primary shadow-sm" : "btn-light border text-muted")">
+            Autocuidado
+        </a>
+        <a asp-action="Index" asp-route-categoria="Depresión" class="btn btn-sm rounded-pill px-3 py-2 fw-medium @(ViewBag.CategoriaSeleccionada == "Depresión" ? "btn-primary shadow-sm" : "btn-light border text-muted")">
+            Depresión
+        </a>
+        <a asp-action="Index" asp-route-categoria="Apego" class="btn btn-sm rounded-pill px-3 py-2 fw-medium @(ViewBag.CategoriaSeleccionada == "Apego" ? "btn-primary shadow-sm" : "btn-light border text-muted")">
+            Apego y Vínculos
+        </a>
+    </div>
+
+    <!-- TARJETAS DE ARTÍCULOS DINÁMICAS -->
+    <div class="row g-4" id="articles-grid">
+        @if (!Model.Any())
+        {
+            <div class="col-12 text-center py-5">
+                <div class="p-5 bg-white rounded-4 shadow-sm mx-auto" style="max-width: 500px;">
+                    <h5 class="fw-bold text-muted">No se encontraron artículos en esta categoría.</h5>
+                    <p class="text-muted small">Pronto el equipo clínico publicará nuevas lecturas para esta área.</p>
+                    <a asp-action="Index" class="btn btn-sm btn-outline-primary rounded-pill px-4 mt-2">Ver todas las guías</a>
+                </div>
+            </div>
+        }
+        else
+        {
+            @foreach (var art in Model)
+            {
+                var plainContent = cleanText(art.Contenido);
+                var previewSnippet = plainContent.Length > 125 ? plainContent.Substring(0, 125) + "..." : plainContent;
+                var wordCount = plainContent.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Length;
+                var readMins = Math.Max(1, (int)Math.Ceiling(wordCount / 180.0));
+
+                // Estilo sobrio y estético según categoría
+                string bgBadge = "#E8D7F1";
+                string colorBadge = "#3E2F4C";
+                string gradientTop = "linear-gradient(90deg, #6D597A 0%, #B56576 100%)";
+
+                if (art.Categoria == "Ansiedad")
+                {
+                    bgBadge = "#E1F0FA";
+                    colorBadge = "#1D5C80";
+                    gradientTop = "linear-gradient(90deg, #2A6F97 0%, #014F86 100%)";
+                }
+                else if (art.Categoria == "Estrés Académico")
+                {
+                    bgBadge = "#E2F4EE";
+                    colorBadge = "#266B56";
+                    gradientTop = "linear-gradient(90deg, #528788 0%, #2A9D8F 100%)";
+                }
+                else if (art.Categoria == "Autocuidado")
+                {
+                    bgBadge = "#F4EBF8";
+                    colorBadge = "#5C3370";
+                    gradientTop = "linear-gradient(90deg, #7B2CBF 0%, #9D4EDD 100%)";
+                }
+                else if (art.Categoria == "Depresión")
+                {
+                    bgBadge = "#FDE8E8";
+                    colorBadge = "#9B1C1C";
+                    gradientTop = "linear-gradient(90deg, #E63946 0%, #B56576 100%)";
+                }
+                else if (art.Categoria == "Apego" || art.Categoria == "Relaciones & Apego")
+                {
+                    bgBadge = "#EBF5FB";
+                    colorBadge = "#1A5276";
+                    gradientTop = "linear-gradient(90deg, #2A6F97 0%, #6D597A 100%)";
+                }
+
+                <div class="col-12 col-md-6 col-lg-4 article-card-item" 
+                     data-title="@art.Titulo.ToLower()" 
+                     data-content="@plainContent.ToLower()" 
+                     data-cat="@art.Categoria.ToLower()"
+                     data-aos="fade-up">
+                    <div class="card h-100 border-0 shadow-sm rounded-4 bg-white overflow-hidden d-flex flex-column justify-content-between blog-hover-card tilt-card">
+                        <!-- LÍNEA SUPERIOR DE GRADIENTE TEMÁTICO -->
+                        <div style="height: 6px; background: @gradientTop;"></div>
+
+                        <div class="p-4 flex-grow-1 d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge px-3 py-1.5 rounded-pill fw-semibold shadow-sm" style="background-color: @bgBadge; color: @colorBadge; font-size: 0.8rem;">
+                                    ✦ @art.Categoria
+                                </span>
+                                <span class="text-muted small" style="font-size: 0.78rem;">
+                                    ~@readMins min lectura
+                                </span>
+                            </div>
+
+                            <h5 class="fw-bold mb-2 lh-base" style="color: #1F2937;">
+                                @art.Titulo
+                            </h5>
+
+                            <p class="text-muted small mb-4 flex-grow-1" style="line-height: 1.6;">
+                                @previewSnippet
+                            </p>
+                        </div>
+
+                        <div class="p-3 px-4 bg-light bg-opacity-50 border-top d-flex flex-wrap justify-content-between align-items-center gap-2">
+                            <small class="text-muted" style="font-size: 0.75rem;">
+                                @art.FechaPublicacion.ToString("dd/MM/yyyy")
+                            </small>
+                            <div class="d-flex align-items-center gap-2">
+                                <!-- BOTÓN MODAL RÁPIDO -->
+                                <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-2.5 py-1 small" 
+                                        data-bs-toggle="modal" data-bs-target="#modalArticulo-@art.Id" 
+                                        title="Lectura rápida en pantalla">
+                                    Vista Rápida
+                                </button>
+                                <!-- BOTÓN PÁGINA COMPLETA -->
+                                <a asp-action="Detalle" asp-route-id="@art.Id" class="btn btn-sm fw-semibold text-white px-3 py-1 rounded-pill shadow-sm" style="background-color: var(--verde-menta);">
+                                    Leer guía →
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MODAL DE LECTURA RÁPIDA -->
+                <div class="modal fade" id="modalArticulo-@art.Id" tabindex="-1" aria-labelledby="modalLabel-@art.Id" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+                        <div class="modal-content rounded-4 border-0 shadow-lg overflow-hidden">
+                            <div class="modal-header text-white border-0 p-4" style="background: radial-gradient(circle at 80% 20%, #2A6F97 0%, #152238 85%);">
+                                <div>
+                                    <span class="badge px-3 py-1 rounded-pill mb-2 fw-semibold" style="background-color: @bgBadge; color: @colorBadge;">
+                                        ✦ @art.Categoria
+                                    </span>
+                                    <h4 class="modal-title fw-bold text-white lh-base" id="modalLabel-@art.Id">
+                                        @art.Titulo
+                                    </h4>
+                                    <div class="small text-white-50 mt-1">
+                                        Publicado el @art.FechaPublicacion.ToString("dd MMMM, yyyy") • ~@readMins min lectura
+                                    </div>
+                                </div>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                            </div>
+                            <div class="modal-body p-4 p-md-5 fs-6" style="line-height: 1.8; color: #2D3748;">
+                                @Html.Raw(art.Contenido)
+
+                                <div class="p-3 mt-4 rounded-3 bg-light border d-flex justify-content-between align-items-center">
+                                    <span class="small text-muted">¿Deseas guardar o compartir esta información?</span>
+                                    <a asp-action="Detalle" asp-route-id="@art.Id" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                                        Ver en pantalla completa ↗
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="modal-footer border-top bg-light p-3">
+                                <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">
+                                    Cerrar
+                                </button>
+                                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                                {
+                                    <a asp-controller="Citas" asp-action="Agendar" class="btn text-white rounded-pill px-4 fw-semibold" style="background-color: var(--verde-menta);">
+                                        Reservar Cita Anónima
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Account" asp-action="Login" class="btn text-white rounded-pill px-4 fw-semibold" style="background-color: var(--azul-serenidad);">
+                                        Ingresar a Star Minds
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+    <!-- MENSAJE DINÁMICO CUANDO LA BÚSQUEDA NO DEVUELVE RESULTADOS -->
+    <div id="no-search-results" class="text-center py-5 d-none">
+        <div class="p-5 bg-white rounded-4 shadow-sm mx-auto" style="max-width: 480px;">
+            <h5 class="fw-bold text-muted">No se encontraron artículos con ese criterio</h5>
+            <p class="text-muted small">Intenta buscar palabras clave como "estrés", "sueño", "ansiedad", "depresión" o "apego".</p>
+            <button class="btn btn-sm btn-outline-primary rounded-pill px-3" onclick="document.getElementById('blog-search-input').value=''; filterArticles();">
+                Limpiar búsqueda
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- SECCIÓN DE REFERENCIA CLÍNICA ESTILIZADA CON IDENTIDAD CÓSMICA Y COLORES LLAMATIVOS -->
+<div class="container-fluid px-3 px-lg-5 my-5" data-aos="fade-up">
+    <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white w-100" style="border: 1px solid rgba(42, 111, 151, 0.12) !important;">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+            <div>
+                <span class="badge px-3 py-1.5 rounded-pill mb-2 fw-semibold shadow-sm" 
+                      style="background: linear-gradient(135deg, #E2F4EE 0%, #D0EFE5 100%); color: #1E6652; border: 1px solid #B8E4D6; font-size: 0.85rem;">
+                    ✦ Guía Orientativa para Estudiantes UPDS
+                </span>
+                <h3 class="fw-bold mb-1" style="color: var(--azul-serenidad); font-size: 1.7rem;">
+                    Clasificación y Señales de Alerta Comunes
+                </h3>
+                <p class="text-muted mb-0">Marco de referencia psicoeducativo desarrollado por el Gabinete de Apoyo Psicológico Star Minds.</p>
+            </div>
+            <div>
+                <span class="badge rounded-pill px-3 py-2 small shadow-sm" 
+                      style="background-color: #F8F9FA; color: #495057; border: 1.5px solid #DEE2E6;">
+                    ✦ Uso Informativo • No sustituye diagnóstico médico
+                </span>
+            </div>
+        </div>
+        
+        <div class="table-responsive my-3 rounded-4 overflow-hidden shadow-sm" style="border: 1px solid #E9ECEF;">
+            <table class="table table-hover align-middle mb-0">
+                <thead style="background: linear-gradient(90deg, #F0F4F8 0%, #F5EEF8 50%, #EDF8F5 100%);">
+                    <tr class="small fw-bold" style="color: var(--azul-serenidad);">
+                        <th style="width: 25%;" class="py-3 px-4">✦ Categoría Principal</th>
+                        <th style="width: 35%;" class="py-3 px-4">Trastornos Frecuentes</th>
+                        <th style="width: 40%;" class="py-3 px-4">Síntomas Comunes</th>
+                    </tr>
+                </thead>
+                <tbody class="small">
+                    <tr style="background-color: #ffffff;">
+                        <td class="px-4 py-3">
+                            <span class="badge rounded-pill px-3 py-1.5 fw-semibold shadow-sm" 
+                                  style="background: linear-gradient(135deg, #E1F0FA, #C8E3F5); color: #0E486B; border: 1px solid #B0D5EE; font-size: 0.82rem;">
+                                ✦ Trastornos de Ansiedad
+                            </span>
+                        </td>
+                        <td class="px-4 py-3 fw-medium text-dark">Ansiedad generalizada, pánico, fobias, TOC</td>
+                        <td class="px-4 py-3 text-muted">Preocupación excesiva, taquicardia, opresión en el pecho, conductas repetitivas.</td>
+                    </tr>
+                    <tr style="background-color: #FAFCFF;">
+                        <td class="px-4 py-3">
+                            <span class="badge rounded-pill px-3 py-1.5 fw-semibold shadow-sm" 
+                                  style="background: linear-gradient(135deg, #F4EBF8, #E5D2ED); color: #53256A; border: 1px solid #D5B8E2; font-size: 0.82rem;">
+                                ✦ Estado de Ánimo
+                            </span>
+                        </td>
+                        <td class="px-4 py-3 fw-medium text-dark">Depresión clínica, Trastorno bipolar</td>
+                        <td class="px-4 py-3 text-muted">Tristeza profunda, apatía, oscilaciones extremas entre euforia y depresión.</td>
+                    </tr>
+                    <tr style="background-color: #ffffff;">
+                        <td class="px-4 py-3">
+                            <span class="badge rounded-pill px-3 py-1.5 fw-semibold shadow-sm" 
+                                  style="background: linear-gradient(135deg, #ECE9F7, #D9D2F0); color: #3A2375; border: 1px solid #C4B9E8; font-size: 0.82rem;">
+                                ✦ Trastornos Psicóticos
+                            </span>
+                        </td>
+                        <td class="px-4 py-3 fw-medium text-dark">Esquizofrenia, trastornos delirantes</td>
+                        <td class="px-4 py-3 text-muted">Desconexión de la realidad, alucinaciones auditivas o visuales, delirios.</td>
+                    </tr>
+                    <tr style="background-color: #FAFCFF;">
+                        <td class="px-4 py-3">
+                            <span class="badge rounded-pill px-3 py-1.5 fw-semibold shadow-sm" 
+                                  style="background: linear-gradient(135deg, #E2F4EE, #C7ECE0); color: #155743; border: 1px solid #A6DEC9; font-size: 0.82rem;">
+                                ✦ Conducta Alimentaria (TCA)
+                            </span>
+                        </td>
+                        <td class="px-4 py-3 fw-medium text-dark">Anorexia nerviosa, bulimia nerviosa</td>
+                        <td class="px-4 py-3 text-muted">Relación distorsionada con la comida, el peso y la imagen corporal.</td>
+                    </tr>
+                    <tr style="background-color: #ffffff;">
+                        <td class="px-4 py-3">
+                            <span class="badge rounded-pill px-3 py-1.5 fw-semibold shadow-sm" 
+                                  style="background: linear-gradient(135deg, #FDE8E8, #F9C8C8); color: #8A1616; border: 1px solid #F5A3A3; font-size: 0.82rem;">
+                                ✦ Trastornos por Estrés
+                            </span>
+                        </td>
+                        <td class="px-4 py-3 fw-medium text-dark">Estrés postraumático (TEPT), Burnout</td>
+                        <td class="px-4 py-3 text-muted">Recuerdos intrusivos, agotamiento mental extremo, bloqueo académico.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row g-4 mt-3">
+            <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="p-4 rounded-4 h-100 shadow-sm position-relative overflow-hidden tilt-card" 
+                     style="background: linear-gradient(135deg, #FFF9F5 0%, #FFF2EC 100%); border-left: 6px solid #E63946; border-top: 1px solid #FFE0D3; border-right: 1px solid #FFE0D3; border-bottom: 1px solid #FFE0D3;">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <span class="badge px-2.5 py-1 rounded-pill small fw-semibold text-white" style="background-color: #E63946;">✦ Alerta</span>
+                        <h6 class="fw-bold mb-0 fs-6" style="color: #9B1C1C;">Señales de Alerta Temprana</h6>
+                    </div>
+                    <ul class="text-muted small mb-0 ps-3 mt-3" style="line-height: 1.8;">
+                        <li class="mb-1.5">Aislamiento social o pérdida marcada de interés por actividades cotidianas (anhedonia).</li>
+                        <li class="mb-1.5">Alteraciones drásticas en los ciclos de sueño (insomnio recurrente) o apetito.</li>
+                        <li class="mb-1.5">Sentimientos prolongados de culpa, vacío interior o desesperanza.</li>
+                        <li class="mb-0">Dificultad severa y continuada para concentrarse en entregas y exámenes.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="p-4 rounded-4 h-100 shadow-sm position-relative overflow-hidden tilt-card" 
+                     style="background: linear-gradient(135deg, #F0F9F8 0%, #E3F5F2 100%); border-left: 6px solid var(--verde-menta); border-top: 1px solid #CCEBE4; border-right: 1px solid #CCEBE4; border-bottom: 1px solid #CCEBE4;">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <span class="badge px-2.5 py-1 rounded-pill small fw-semibold text-white" style="background-color: var(--verde-menta);">✦ Tratamiento</span>
+                        <h6 class="fw-bold mb-0 fs-6" style="color: #1A5446;">Abordaje y Contención Terapéutica</h6>
+                    </div>
+                    <ul class="text-muted small mb-0 ps-3 mt-3" style="line-height: 1.8;">
+                        <li class="mb-1.5"><strong>Psicoterapia Cognitivo-Conductual (TCC):</strong> Desarrollo de estrategias efectivas de afrontamiento.</li>
+                        <li class="mb-1.5"><strong>Apoyo Psicosocial:</strong> Redes de contención, higiene del sueño y técnicas de regulación emocional.</li>
+                        <li class="mb-0"><strong>Orientación Profesional:</strong> Diagnóstico diferencial con especialistas habilitados.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- LLAMADO A LA ACCIÓN CÓSMICO / RESERVA ANÓNIMA -->
+        <div class="mt-4 p-4 p-md-5 rounded-4 text-white text-center text-md-start d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 shadow tilt-card" data-aos="fade-up" 
+             style="background: linear-gradient(135deg, #0B1320 0%, #152238 35%, #2A6F97 70%, #6D597A 100%); border: 1px solid rgba(255,255,255,0.15);">
+            <div>
+                <span class="badge bg-white bg-opacity-20 text-white rounded-pill px-3 py-1 small fw-semibold mb-2">
+                    ✦ Gabinete Psicológico Star Minds
+                </span>
+                <h4 class="fw-bold mb-1 text-white">¿Sientes que necesitas orientación o apoyo con alguno de estos temas?</h4>
+                <p class="text-white-50 mb-0 small" style="max-width: 650px;">
+                    Nuestro equipo cuenta con psicólogos colegiados para acompañarte en un espacio seguro, confidencial y 100% anónimo.
+                </p>
+            </div>
+            <div class="flex-shrink-0">
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <a asp-controller="Citas" asp-action="Agendar" class="btn text-white fw-semibold px-4 py-2.5 rounded-pill shadow-sm fs-6" style="background-color: var(--verde-menta);">
+                        ✦ Agendar Cita Anónima
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-light fw-semibold px-4 py-2.5 rounded-pill shadow-sm fs-6" style="color: var(--azul-serenidad);">
+                        ✦ Ingresar y Agendar
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .blog-hover-card {
+        transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+    .blog-hover-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 28px rgba(33, 37, 41, 0.09) !important;
+    }
+    .modal-backdrop {
+        z-index: 1050 !important;
+    }
+    .modal {
+        z-index: 1055 !important;
+    }
+
+    /* ESTILOS SWIPER */
+    .swiper-card-custom {
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .swiper-card-custom:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(42, 111, 151, 0.12) !important;
+    }
+    .swiper-pagination-bullet-active {
+        background-color: var(--azul-serenidad) !important;
+        width: 22px !important;
+        border-radius: 6px !important;
+    }
+</style>
+
+@section Scripts {
+    <!-- SCRIPT SWIPER UI -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        // Mover modales a document.body para evitar que el backdrop los tape
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.modal').forEach(function (modal) {
+                document.body.appendChild(modal);
+            });
+
+            // Inicializar Swiper UI Carousel
+            if (document.querySelector('.mySwiperBlog')) {
+                const swiper = new Swiper('.mySwiperBlog', {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                    loop: true,
+                    grabCursor: true,
+                    autoplay: {
+                        delay: 4500,
+                        disableOnInteraction: false,
+                        pauseOnMouseEnter: true
+                    },
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true
+                    },
+                    navigation: {
+                        nextEl: '.swiper-btn-next',
+                        prevEl: '.swiper-btn-prev'
+                    },
+                    breakpoints: {
+                        640: {
+                            slidesPerView: 2,
+                            spaceBetween: 20
+                        },
+                        1024: {
+                            slidesPerView: 3,
+                            spaceBetween: 24
+                        }
+                    }
+                });
+            }
+        });
+
+        function filterArticles() {
+            const query = (document.getElementById('blog-search-input').value || '').trim().toLowerCase();
+            const cards = document.querySelectorAll('.article-card-item');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const title = card.getAttribute('data-title') || '';
+                const content = card.getAttribute('data-content') || '';
+                const cat = card.getAttribute('data-cat') || '';
+
+                if (!query || title.includes(query) || content.includes(query) || cat.includes(query)) {
+                    card.classList.remove('d-none');
+                    visibleCount++;
+                } else {
+                    card.classList.add('d-none');
+                }
+            });
+
+            const noResults = document.getElementById('no-search-results');
+            if (noResults) {
+                if (visibleCount === 0 && cards.length > 0) {
+                    noResults.classList.remove('d-none');
+                } else {
+                    noResults.classList.add('d-none');
+                }
+            }
+        }
+
+        const searchInput = document.getElementById('blog-search-input');
+        if (searchInput) {
+            searchInput.addEventListener('input', filterArticles);
+        }
+    </script>
+}

@@ -20,9 +20,28 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddControllersWithViews();
 
+// Habilitar servicios de API y Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
-if (!app.Environment.IsDevelopment())
+// Sembrado de artículos psicoeducativos (Depresión, Apego, etc.)
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<StarMindsContext>();
+    await BlogDbSeeder.SeedArticulosAsync(context);
+}
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "StarMinds API v1");
+    });
+}
+else
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
