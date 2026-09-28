@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using StarMindsMVC.Data;
+using StarMindsMVC.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = "/Account/AccessDenied";
         options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
     });
+
+// 2. Registrar transformación reactiva de Claims para resolver el Alias dinámico de quien se logee
+builder.Services.AddScoped<IClaimsTransformation, StarMindsClaimsTransformation>();
 
 builder.Services.AddControllersWithViews();
 

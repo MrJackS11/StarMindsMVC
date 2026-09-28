@@ -33,45 +33,51 @@
                     Un espacio seguro, anónimo y discreto para tu bienestar psicológico. Agenda sesiones con nuestros especialistas sin temor al juicio social ni a la exposición pública.
                 </p>
 
-                <!-- Botones Dinámicos Responsivos -->
+                <!-- Botones Dinámicos Responsivos y Vivos -->
                 <div class="hero-btn-group">
                     @if (User.Identity != null && User.Identity.IsAuthenticated)
                     {
                         @if (User.IsInRole("Estudiante"))
                         {
-                            <a asp-controller="Citas" asp-action="Agendar" class="btn hero-btn text-white shadow" style="background-color: var(--verde-menta);">
-                                ✦ Agendar Cita Discreta
+                            <a asp-controller="Citas" asp-action="Agendar" class="hero-btn hero-btn-mint shadow">
+                                <span>✦</span> Agendar Cita Discreta
                             </a>
-                            <a asp-controller="Citas" asp-action="Index" class="btn hero-btn btn-outline-light shadow">
-                                Mis Citas Activas
+                            <a asp-controller="Citas" asp-action="Index" class="hero-btn hero-btn-glass shadow">
+                                <span>📅</span> Mis Citas Activas
                             </a>
-                            <a asp-controller="Home" asp-action="ParaTi" class="btn hero-btn shadow text-white" style="background-color: var(--morado-calma);">
-                                ✦ Muro Para Ti
+                            <a asp-controller="Home" asp-action="ParaTi" class="hero-btn hero-btn-purple shadow">
+                                <span>💜</span> Muro Para Ti
                             </a>
                         }
                         else if (User.IsInRole("Psicologo"))
                         {
-                            <a asp-controller="Psicologo" asp-action="Agenda" class="btn hero-btn text-white shadow" style="background-color: var(--verde-menta);">
-                                📋 Abrir Agenda Terapéutica
+                            <a asp-controller="Psicologo" asp-action="Agenda" class="hero-btn hero-btn-mint shadow">
+                                <span>📋</span> Abrir Agenda Terapéutica
+                            </a>
+                            <a asp-controller="Blog" asp-action="Index" class="hero-btn hero-btn-glass shadow">
+                                <span>📚</span> Recursos Clínicos
                             </a>
                         }
                         else if (User.IsInRole("Administrador"))
                         {
-                            <a asp-controller="Admin" asp-action="Dashboard" class="btn hero-btn text-white shadow" style="background-color: var(--azul-serenidad);">
-                                📊 Panel de Dirección y Métricas
+                            <a asp-controller="Admin" asp-action="Dashboard" class="hero-btn hero-btn-blue shadow">
+                                <span>📊</span> Panel de Dirección y Métricas
+                            </a>
+                            <a asp-controller="Blog" asp-action="Index" class="hero-btn hero-btn-glass shadow">
+                                <span>📚</span> Gestión Psicoeducativa
                             </a>
                         }
                     }
                     else
                     {
-                        <a asp-controller="Account" asp-action="Register" class="btn hero-btn text-white shadow" style="background-color: var(--verde-menta);">
-                            ✦ Comenzar con un Alias Anónimo
+                        <a asp-controller="Account" asp-action="Register" class="hero-btn hero-btn-mint shadow">
+                            <span>✦</span> Comenzar con un Alias Anónimo
                         </a>
-                        <a asp-controller="Account" asp-action="Login" class="btn hero-btn btn-outline-light shadow">
-                            Acceder a mi Portal
+                        <a asp-controller="Account" asp-action="Login" class="hero-btn hero-btn-glass shadow">
+                            <span>🔐</span> Acceder a mi Portal
                         </a>
-                        <a asp-controller="Blog" asp-action="Index" class="btn hero-btn text-white-50 btn-link text-decoration-none">
-                            Ver Guías de Bienestar →
+                        <a asp-controller="Blog" asp-action="Index" class="hero-btn hero-btn-purple shadow">
+                            <span>📖</span> Ver Guías de Bienestar →
                         </a>
                     }
                 </div>
@@ -282,23 +288,95 @@
     .hero-btn-group {
         display: flex;
         flex-wrap: wrap;
-        gap: 12px;
+        gap: 14px;
+        align-items: center;
     }
 
     .hero-btn {
-        border-radius: 12px;
+        border-radius: 50rem;
         font-weight: 600;
-        padding: 12px 22px;
-        font-size: 1rem;
+        padding: 13px 26px;
+        font-size: 0.98rem;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
-        transition: transform 0.22s ease, box-shadow 0.22s ease;
+        gap: 9px;
+        letter-spacing: 0.2px;
+        transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        border: none;
+    }
+
+    .hero-btn::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+        transition: 0.6s ease;
+    }
+
+    .hero-btn:hover::after {
+        left: 100%;
     }
 
     .hero-btn:hover {
-        transform: translateY(-2px);
+        transform: translateY(-3px) scale(1.03);
+    }
+
+    /* BOTÓN MENTA RADIANTE (ACCIÓN PRIMARIA) */
+    .hero-btn-mint {
+        background: linear-gradient(135deg, #2EC4B6 0%, #3A9E96 45%, #2A6F97 100%);
+        color: #ffffff !important;
+        border: 1.5px solid rgba(255, 255, 255, 0.35);
+        box-shadow: 0 10px 24px rgba(46, 196, 182, 0.38), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    }
+    .hero-btn-mint:hover {
+        box-shadow: 0 14px 32px rgba(46, 196, 182, 0.58), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+        color: #ffffff !important;
+    }
+
+    /* BOTÓN CRISTAL LUMINOSO (GLASSMORPHISM) */
+    .hero-btn-glass {
+        background: rgba(255, 255, 255, 0.14);
+        backdrop-filter: blur(14px);
+        color: #ffffff !important;
+        border: 1.5px solid rgba(255, 255, 255, 0.35);
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+    }
+    .hero-btn-glass:hover {
+        background: rgba(255, 255, 255, 0.26);
+        border-color: rgba(255, 255, 255, 0.7);
+        box-shadow: 0 12px 30px rgba(255, 255, 255, 0.22);
+        color: #ffffff !important;
+    }
+
+    /* BOTÓN PÚRPURA CÓSMICO (COMUNIDAD / PARA TI) */
+    .hero-btn-purple {
+        background: linear-gradient(135deg, #9D4EDD 0%, #7B2CBF 45%, #5A189A 100%);
+        color: #ffffff !important;
+        border: 1.5px solid rgba(255, 255, 255, 0.35);
+        box-shadow: 0 10px 24px rgba(157, 78, 221, 0.38), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    }
+    .hero-btn-purple:hover {
+        box-shadow: 0 14px 32px rgba(157, 78, 221, 0.58), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+        color: #ffffff !important;
+    }
+
+    /* BOTÓN AZUL SERENIDAD (DIRECCIÓN) */
+    .hero-btn-blue {
+        background: linear-gradient(135deg, #0096C7 0%, #2A6F97 50%, #014F86 100%);
+        color: #ffffff !important;
+        border: 1.5px solid rgba(255, 255, 255, 0.35);
+        box-shadow: 0 10px 24px rgba(42, 111, 151, 0.42), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    }
+    .hero-btn-blue:hover {
+        box-shadow: 0 14px 32px rgba(42, 111, 151, 0.62);
+        color: #ffffff !important;
     }
 
     .star-sparkle {
@@ -329,12 +407,12 @@
         .hero-btn-group {
             flex-direction: column;
             width: 100%;
-            gap: 10px;
+            gap: 12px;
         }
 
         .hero-btn {
             width: 100%;
-            padding: 13px 18px;
+            padding: 14px 20px;
             font-size: 0.98rem;
             text-align: center;
         }

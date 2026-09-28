@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8" />
@@ -235,7 +235,7 @@
                     else
                     {
                         <span class="badge badge-morado rounded-pill px-2.5 py-1 small fw-semibold" style="font-size: 0.78rem;">
-                            ✦ @User.Identity.Name
+                            ✦ @(User.Identity?.Name?.Contains("@") == true ? User.Identity.Name.Split('@')[0] : (User.Identity?.Name ?? "Usuario"))
                         </span>
                     }
 
@@ -293,7 +293,7 @@
                     {
                         <div class="nav-auth-card d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2 gap-lg-3">
                             <span class="fw-semibold px-3 py-1.5 rounded-pill badge-morado text-center flex-shrink-0" style="font-size: 0.9rem;">
-                                ✦ @User.Identity.Name
+                                ✦ @(User.Identity?.Name?.Contains("@") == true ? User.Identity.Name.Split('@')[0] : (User.Identity?.Name ?? "Usuario"))
                             </span>
                             <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline m-0 w-100 w-lg-auto" onsubmit="stopMusicOnLogout()">
                                 @Html.AntiForgeryToken()
